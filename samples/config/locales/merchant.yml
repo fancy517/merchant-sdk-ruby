@@ -1,0 +1,12 @@
+en:
+  merchant:
+    mass_pay:
+      ReceiverType: EmailAddress
+      MassPayItem:
+      - ReceiverEmail: enduser_biz@gmail.com
+        Amount:
+          currencyID: USD
+          value: "3.00"
+
+
+

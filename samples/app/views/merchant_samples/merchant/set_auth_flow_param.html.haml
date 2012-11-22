@@ -1,0 +1,14 @@
+= api_form_for @set_auth_flow_param, :url => merchant_path(:set_auth_flow_param) do |f|
+  .row
+    .span5
+      %legend Set auth flow param request
+      = f.fields_for :SetAuthFlowParamRequestDetails do |detail|
+        = detail.input :ReturnURL
+        = detail.input :CancelURL
+        = detail.input :LogoutURL
+
+  .form-actions
+    = f.submit "Submit", :class => "btn btn-primary", :data => { :disable_with => "Processing.." }
+
+- if @set_auth_flow_param_response
+  = render 'api_response', :request => @set_auth_flow_param, :response => @set_auth_flow_param_response

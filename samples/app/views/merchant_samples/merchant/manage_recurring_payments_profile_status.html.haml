@@ -1,0 +1,13 @@
+= api_form_for @manage_recurring_payments_profile_status, :url => merchant_path(:manage_recurring_payments_profile_status) do |f|
+  .row
+    .span10
+      %legend Manage recurring payments profile status request
+      = f.fields_for :ManageRecurringPaymentsProfileStatusRequestDetails do |detail|
+        = detail.input :ProfileID
+        = detail.input :Action
+
+  .form-actions
+    = f.submit "Submit", :class => "btn btn-primary", :data => { :disable_with => "Processing.." }
+
+- if @manage_recurring_payments_profile_status_response
+  = render 'api_response', :request => @manage_recurring_payments_profile_status, :response => @manage_recurring_payments_profile_status_response

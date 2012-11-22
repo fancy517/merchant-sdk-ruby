@@ -1,0 +1,11 @@
+= api_form_for @get_balance, :url => merchant_path(:get_balance) do |f|
+  .row
+    .span5
+      %legend Get balance request
+      = f.input :ReturnAllCurrencies
+
+  .form-actions
+    = f.submit "Submit", :class => "btn btn-primary", :data => { :disable_with => "Processing.." }
+
+- if @get_balance_response
+  = render 'api_response', :request => @get_balance, :response => @get_balance_response

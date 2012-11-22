@@ -1,0 +1,31 @@
+= api_form_for @do_reference_transaction, :url => merchant_path(:do_reference_transaction) do |f|
+  .row
+    = f.fields_for :DoReferenceTransactionRequestDetails do |detail|
+      .span5
+        %legend Do reference transaction request
+        = detail.input :ReferenceID
+        = detail.input :PaymentAction
+        = detail.input :PaymentType
+        = detail.fields_for :PaymentDetails do |pay|
+          = pay.fields_for :OrderTotal do |amt|
+            = render "amount", :f => amt
+          = pay.fields_for :ShipToAddress do |address|
+            = render "address", :f => address
+
+      .span5
+        %legend CreditCard
+        = detail.fields_for :CreditCard do |cc|
+          = cc.fields_for :CreditCardNumberType do |type|
+            = type.input :CreditCardType
+            = type.input :CreditCardNumber
+          = cc.input :ExpMonth
+          = cc.input :ExpYear
+          = cc.input :CVV2
+          = cc.fields_for :BillingAddress do |ba|
+            = render "address", :f => ba
+
+  .form-actions
+    = f.submit "Submit", :class => "btn btn-primary", :data => { :disable_with => "Processing.." }
+
+- if @do_reference_transaction_response
+  = render 'api_response', :request => @do_reference_transaction, :response => @do_reference_transaction_response

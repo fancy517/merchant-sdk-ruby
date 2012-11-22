@@ -1,0 +1,11 @@
+= api_form_for @get_auth_details, :url => merchant_path(:get_auth_details) do |f|
+  .row
+    .span5
+      %legend Get auth details request
+      = f.input :Token
+
+  .form-actions
+    = f.submit "Submit", :class => "btn btn-primary", :data => { :disable_with => "Processing.." }
+
+- if @get_auth_details_response
+  = render 'api_response', :request => @get_auth_details, :response => @get_auth_details_response

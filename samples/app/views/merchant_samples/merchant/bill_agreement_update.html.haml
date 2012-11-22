@@ -1,0 +1,13 @@
+= api_form_for @bill_agreement_update, :url => merchant_path(:bill_agreement_update) do |f|
+  .row
+    .span10
+      %legend Bill agreement update request
+      = f.input :ReferenceID
+      = f.input :BillingAgreementStatus
+      = f.input :BillingAgreementDescription
+
+  .form-actions
+    = f.submit "Submit", :class => "btn btn-primary", :data => { :disable_with => "Processing.." }
+
+- if @bill_agreement_update_response
+  = render 'api_response', :request => @bill_agreement_update, :response => @bill_agreement_update_response
