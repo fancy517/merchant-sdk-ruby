@@ -1193,13 +1193,5 @@ module PayPal::SDK
 
     end
 
-    class API < Core::API::Merchant
-      include Services
-
-      def initialize(environment = nil, options = {})
-        super("", environment, options)
-      end
-
-    end
   end
 end
