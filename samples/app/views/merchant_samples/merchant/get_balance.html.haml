@@ -2,7 +2,8 @@
   .row
     .span5
       %legend Get balance request
-      = f.input :ReturnAllCurrencies
+      = f.input :ReturnAllCurrencies, :collection => [ ["Return only the balance for the primary currency holding", "0"],
+          ["Return the balance for each currency holding", "1"] ]
 
   .form-actions
     = f.submit "Submit", :class => "btn btn-primary", :data => { :disable_with => "Processing.." }
