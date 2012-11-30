@@ -138,7 +138,7 @@ require 'paypal-sdk-merchant'
 Add following line in rails `Gemfile`:
 
     gem 'paypal-sdk-merchant'
-    gem 'merchant_samples', :git => "https://github.com/paypal/merchant-ruby.git", :group => :development
+    gem 'merchant_samples', :git => "https://github.com/paypal/merchant-sdk-ruby.git", :group => :development
 
 Configure routes(`config/routes.rb`):
 
