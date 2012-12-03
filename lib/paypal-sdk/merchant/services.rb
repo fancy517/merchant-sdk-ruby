@@ -1,9 +1,9 @@
 require 'paypal-sdk-core'
-require 'paypal-sdk/pay_pal_api_interface_service/data_types'
+require 'paypal-sdk/merchant/data_types'
 
 # AUTO GENERATED code for PayPalAPIInterfaceService
 module PayPal::SDK
-  module PayPalAPIInterfaceService
+  module Merchant
 
 	  # Service Version
 	  SERVICE_VERSION = "94.0"

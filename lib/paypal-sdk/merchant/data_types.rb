@@ -1,10 +1,10 @@
-# Stub objects for PayPalAPIInterfaceService
+# Stub objects for Merchant
 # Auto generated code
 
 require 'paypal-sdk-core'
 
 module PayPal::SDK
-  module PayPalAPIInterfaceService
+  module Merchant
     module DataTypes
 
       class DataType < Core::API::DataTypes::Base
