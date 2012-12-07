@@ -8,6 +8,16 @@ module MerchantSamples
       redirect_to :action => :refund_transaction
     end
 
+    def ipn_notify
+      if PayPal::SDK::Core::IPN.verify?(request.raw_post)
+        logger.info("IPN message: VERIFIED")
+        render :text => "VERIFIED"
+      else
+        logger.info("IPN message: INVALID")
+        render :text => "INVALID"
+      end
+    end
+
     def refund_transaction
       @refund_transaction = api.build_refund_transaction(params[:RefundTransactionRequestType] || default_api_value)
       @refund_transaction_response = api.refund_transaction(@refund_transaction) if request.post?
@@ -190,6 +200,7 @@ module MerchantSamples
 
     def do_direct_payment
       @do_direct_payment = api.build_do_direct_payment(params[:DoDirectPaymentRequestType] || default_api_value)
+      @do_direct_payment.DoDirectPaymentRequestDetails.PaymentDetails.NotifyURL ||= ipn_notify_url
       @do_direct_payment_response = api.do_direct_payment(@do_direct_payment) if request.post?
     end
 

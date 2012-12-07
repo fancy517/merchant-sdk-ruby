@@ -6,6 +6,8 @@
         = detail.input :PaymentAction
         = detail.fields_for :CreditCard do |cc|
           = render "credit_card", :f => cc
+        = detail.fields_for :PaymentDetails do |pay|
+          = pay.input :NotifyURL
       .span5
         %legend Payment Details
         = detail.fields_for :PaymentDetails do |pay|
