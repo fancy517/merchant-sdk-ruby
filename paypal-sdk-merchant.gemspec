@@ -6,8 +6,8 @@ require 'paypal-sdk/merchant/version'
 Gem::Specification.new do |gem|
   gem.name          = "paypal-sdk-merchant"
   gem.version       = PayPal::SDK::Merchant::VERSION
-  gem.authors       = ["siddick"]
-  gem.email         = ["mebramsha@paypal.com"]
+  gem.authors       = ["PayPal"]
+  gem.email         = ["DL-PP-Platform-Ruby-SDK@paypal.com"]
   gem.description   = %q{Merchants SDK}
   gem.summary       = %q{Merchants SDK}
   gem.homepage      = "https://www.x.com/"

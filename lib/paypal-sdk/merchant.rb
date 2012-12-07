@@ -4,7 +4,7 @@ module PayPal
   module SDK
     module Merchant
 
-      autoload :Version,   "paypal-sdk/merchant/version"
+      autoload :VERSION,   "paypal-sdk/merchant/version"
       autoload :Services,  "paypal-sdk/merchant/services"
       autoload :DataTypes, "paypal-sdk/merchant/data_types"
       autoload :API,       "paypal-sdk/merchant/api"

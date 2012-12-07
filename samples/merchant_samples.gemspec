@@ -7,8 +7,8 @@ require "merchant_samples/version"
 Gem::Specification.new do |s|
   s.name        = "merchant_samples"
   s.version     = MerchantSamples::VERSION
-  s.authors     = ["siddick"]
-  s.email       = ["mebramsha@paypal.com"]
+  s.authors     = ["PayPal"]
+  s.email       = ["DL-PP-Platform-Ruby-SDK@paypal.com"]
   s.homepage    = "https://www.x.com/"
   s.summary     = "Samples for Merchant."
   s.description = "Samples for Merchant."
