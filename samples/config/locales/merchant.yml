@@ -1,5 +1,39 @@
 en:
   merchant:
+    do_express_checkout_payment:
+      DoExpressCheckoutPaymentRequestDetails:
+        Token: EC-8UT96070TG172711X
+        PayerID: TWLK53YN7GDM6
+        PaymentAction: Sale
+        PaymentDetails:
+          OrderTotal:
+            currencyID: USD
+            value: 2.0
+    set_express_checkout:
+      SetExpressCheckoutRequestDetails:
+        PaymentDetails:
+          PaymentAction: Sale
+          TaxTotal:
+            currencyID: USD
+            value: 0
+          ShippingMethod: UPSGround
+          ShippingTotal:
+            currencyID: USD
+            value: 3.0
+          PaymentDetailsItem:
+            Name: Item Name
+            Amount:
+              currencyID: USD
+              value: 5.27
+            Quantity: 1
+            ItemCategory: Physical
+          ShipToAddress:
+            Name: John Doe
+            Street1: "1 Main St"
+            CityName: San Jose
+            StateOrProvince: CA
+            Country: US
+            PostalCode: "95131"
     refund_transaction:
       TransactionID:
       Amount:

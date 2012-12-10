@@ -1,0 +1,17 @@
+= api_form_for @do_express_checkout_payment, :url => merchant_path(:do_express_checkout_payment) do |f|
+  .row
+    .span5
+      %legend Do express checkout
+      = f.fields_for :DoExpressCheckoutPaymentRequestDetails do |det|
+        = det.input :Token
+        = det.input :PayerID
+        = det.input :PaymentAction
+        = det.fields_for :PaymentDetails do |pay|
+          = pay.fields_for :OrderTotal do |amt|
+            = render "amount", :f => amt
+
+  .form-actions
+    = f.submit "Submit", :class => "btn btn-primary", :data => { :disable_with => "Processing.." }
+
+- if @do_express_checkout_payment_response
+  = render 'api_response', :request => @do_express_checkout_payment, :response => @do_express_checkout_payment_response
