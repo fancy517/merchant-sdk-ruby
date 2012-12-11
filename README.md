@@ -1,4 +1,4 @@
-# Merchant[ Work in progress !! ]
+# Merchant
 
 SDK for Merchant.
 
