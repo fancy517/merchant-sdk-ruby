@@ -25,6 +25,7 @@
           = pay.fields_for :TaxTotal do |amt|
             = render "amount", :f => amt
           %legend URLS
+          = pay.input :NotifyURL
           = det.input :ReturnURL
           = det.input :CancelURL
 

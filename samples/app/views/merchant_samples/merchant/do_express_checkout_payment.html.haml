@@ -9,6 +9,7 @@
         = det.fields_for :PaymentDetails do |pay|
           = pay.fields_for :OrderTotal do |amt|
             = render "amount", :f => amt
+          = pay.input :NotifyURL
 
   .form-actions
     = f.submit "Submit", :class => "btn btn-primary", :data => { :disable_with => "Processing.." }

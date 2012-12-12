@@ -9,7 +9,7 @@ module MerchantSamples
     end
 
     def ipn_notify
-      if PayPal::SDK::Core::IPN.verify?(request.raw_post)
+      if PayPal::SDK::Core::IPN.valid?(request.raw_post)
         logger.info("IPN message: VERIFIED")
         render :text => "VERIFIED"
       else
@@ -145,6 +145,10 @@ module MerchantSamples
 
     def do_express_checkout_payment
       @do_express_checkout_payment = api.build_do_express_checkout_payment(params[:DoExpressCheckoutPaymentRequestType] || default_api_value)
+      details = @do_express_checkout_payment.DoExpressCheckoutPaymentRequestDetails
+      details.Token   = params[:token]    if params[:token]
+      details.PayerID = params[:PayerID]  if params[:PayerID]
+      details.PaymentDetails[0].NotifyURL ||= ipn_notify_url
       @do_express_checkout_payment_response = api.do_express_checkout_payment(@do_express_checkout_payment) if request.post?
     end
 
@@ -193,8 +197,11 @@ module MerchantSamples
       pay.OrderTotal.currencyID = pay.ItemTotal.currencyID
       pay.OrderTotal.value = pay.ItemTotal.value.to_f + pay.ShippingTotal.value.to_f
 
+      # Notify url
+      pay.NotifyURL ||= ipn_notify_url
+
       # Return and cancel url
-      details.ReturnURL ||= merchant_url(:set_express_checkout)
+      details.ReturnURL ||= merchant_url(:do_express_checkout_payment)
       details.CancelURL ||= merchant_url(:set_express_checkout)
 
       @set_express_checkout_response = api.set_express_checkout(@set_express_checkout) if request.post?
@@ -263,6 +270,7 @@ module MerchantSamples
 
     def do_reference_transaction
       @do_reference_transaction = api.build_do_reference_transaction(params[:DoReferenceTransactionRequestType] || default_api_value)
+      @do_reference_transaction.DoReferenceTransactionRequestDetails.PaymentDetails.NotifyURL ||= ipn_notify_url
       @do_reference_transaction_response = api.do_reference_transaction(@do_reference_transaction) if request.post?
     end
 
