@@ -108,7 +108,7 @@ Make api call with hash:
 
 To get response status:
 
-    transaction_search_response.responseEnvelope.ack
+    transaction_search_response.ack
 
 
 ## Example
