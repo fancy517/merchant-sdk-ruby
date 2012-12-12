@@ -185,6 +185,18 @@ module MerchantSamples
 
     def set_express_checkout
       @set_express_checkout = api.build_set_express_checkout(params[:SetExpressCheckoutRequestType] || default_api_value)
+
+      # Find Item Total and Order Total
+      details = @set_express_checkout.SetExpressCheckoutRequestDetails
+      pay = details.PaymentDetails[0]
+      pay.ItemTotal  = pay.PaymentDetailsItem[0].Amount
+      pay.OrderTotal.currencyID = pay.ItemTotal.currencyID
+      pay.OrderTotal.value = pay.ItemTotal.value.to_f + pay.ShippingTotal.value.to_f
+
+      # Return and cancel url
+      details.ReturnURL ||= merchant_url(:set_express_checkout)
+      details.CancelURL ||= merchant_url(:set_express_checkout)
+
       @set_express_checkout_response = api.set_express_checkout(@set_express_checkout) if request.post?
     end
 

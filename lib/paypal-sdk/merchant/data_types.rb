@@ -833,17 +833,17 @@ module PayPal::SDK
           # Sets the Custom Payment Page Style for payment pages associated with this button/link. PageStyle corresponds to the HTML variable page_style for customizing payment pages. The value is the same as the Page Style Name you chose when adding or editing the page style from the Profile subtab of the My Account tab of your PayPal account. Optional Character length and limitations: 30 single-byte alphabetic characters. 
           object_of :PageStyle, String, :namespace => :ebl
           # A URL for the image you want to appear at the top left of the payment page. The image has a maximum size of 750 pixels wide by 90 pixels high. PayPal recommends that you provide an image that is stored on a secure (https) server. Optional Character length and limitations: 127
-          object_of :cppheaderimage, String, :namespace => :ebl
+          object_of :cppheaderimage, String, :name => "cpp-header-image", :namespace => :ebl
           # Sets the border color around the header of the payment page. The border is a 2-pixel perimeter around the header space, which is 750 pixels wide by 90 pixels high. Optional Character length and limitations: Six character HTML hexadecimal color code in ASCII
-          object_of :cppheaderbordercolor, String, :namespace => :ebl
+          object_of :cppheaderbordercolor, String, :name => "cpp-header-border-color", :namespace => :ebl
           # Sets the background color for the header of the payment page. Optional Character length and limitation: Six character HTML hexadecimal color code in ASCII
-          object_of :cppheaderbackcolor, String, :namespace => :ebl
+          object_of :cppheaderbackcolor, String, :name => "cpp-header-back-color", :namespace => :ebl
           # Sets the background color for the payment page. Optional Character length and limitation: Six character HTML hexadecimal color code in ASCII
-          object_of :cpppayflowcolor, String, :namespace => :ebl
+          object_of :cpppayflowcolor, String, :name => "cpp-payflow-color", :namespace => :ebl
           # Sets the cart gradient color for the Mini Cart on 1X flow. Optional Character length and limitation: Six character HTML hexadecimal color code in ASCII
-          object_of :cppcartbordercolor, String, :namespace => :ebl
+          object_of :cppcartbordercolor, String, :name => "cpp-cart-border-color", :namespace => :ebl
           # A URL for the image you want to appear above the mini-cart. The image has a maximum size of 190 pixels wide by 60 pixels high. PayPal recommends that you provide an image that is stored on a secure (https) server. Optional Character length and limitations: 127
-          object_of :cpplogoimage, String, :namespace => :ebl
+          object_of :cpplogoimage, String, :name => "cpp-logo-image", :namespace => :ebl
           # Customer's shipping address. Optional If you include a shipping address and set the AddressOverride element on the request, PayPal returns this same address in GetExpressCheckoutDetailsResponse. 
           object_of :Address, AddressType, :namespace => :ebl
           # How you want to obtain payment. Required Authorization indicates that this payment is a basic authorization subject to settlement with PayPal Authorization and Capture. Order indicates that this payment is is an order authorization subject to settlement with PayPal Authorization and Capture. Sale indicates that this is a final sale for which you are requesting payment. IMPORTANT: You cannot set PaymentAction to Sale or Order on SetExpressCheckoutRequest and then change PaymentAction to Authorization on the final Express Checkout API, DoExpressCheckoutPaymentRequest. Character length and limit: Up to 13 single-byte alphabetic characters
@@ -1355,13 +1355,13 @@ module PayPal::SDK
           # Sets the Custom Payment Page Style for flow pages associated with this button/link. PageStyle corresponds to the HTML variable page_style for customizing flow pages. The value is the same as the Page Style Name you chose when adding or editing the page style from the Profile subtab of the My Account tab of your PayPal account. Optional Character length and limitations: 30 single-byte alphabetic characters. 
           object_of :PageStyle, String, :namespace => :ebl
           # A URL for the image you want to appear at the top left of the flow page. The image has a maximum size of 750 pixels wide by 90 pixels high. PayPal recommends that you provide an image that is stored on a secure (https) server. Optional Character length and limitations: 127
-          object_of :cppheaderimage, String, :namespace => :ebl
+          object_of :cppheaderimage, String, :name => "cpp-header-image", :namespace => :ebl
           # Sets the border color around the header of the flow page. The border is a 2-pixel perimeter around the header space, which is 750 pixels wide by 90 pixels high. Optional Character length and limitations: Six character HTML hexadecimal color code in ASCII
-          object_of :cppheaderbordercolor, String, :namespace => :ebl
+          object_of :cppheaderbordercolor, String, :name => "cpp-header-border-color", :namespace => :ebl
           # Sets the background color for the header of the flow page. Optional Character length and limitation: Six character HTML hexadecimal color code in ASCII
-          object_of :cppheaderbackcolor, String, :namespace => :ebl
+          object_of :cppheaderbackcolor, String, :name => "cpp-header-back-color", :namespace => :ebl
           # Sets the background color for the payment page. Optional Character length and limitation: Six character HTML hexadecimal color code in ASCII
-          object_of :cpppayflowcolor, String, :namespace => :ebl
+          object_of :cpppayflowcolor, String, :name => "cpp-payflow-color", :namespace => :ebl
           # First Name of the user, this information is used if user chooses to signup with PayPal. Optional Character length and limitation: Six character HTML hexadecimal color code in ASCII
           object_of :FirstName, String, :namespace => :ebl
           # Last Name of the user, this information is used if user chooses to signup with PayPal. Optional Character length and limitation: Six character HTML hexadecimal color code in ASCII
@@ -1411,13 +1411,13 @@ module PayPal::SDK
           # Sets the Custom Payment Page Style for flow pages associated with this button/link. PageStyle corresponds to the HTML variable page_style for customizing flow pages. The value is the same as the Page Style Name you chose when adding or editing the page style from the Profile subtab of the My Account tab of your PayPal account. Optional Character length and limitations: 30 single-byte alphabetic characters. 
           object_of :PageStyle, String, :namespace => :ebl
           # A URL for the image you want to appear at the top left of the flow page. The image has a maximum size of 750 pixels wide by 90 pixels high. PayPal recommends that you provide an image that is stored on a secure (https) server. Optional Character length and limitations: 127 
-          object_of :cppheaderimage, String, :namespace => :ebl
+          object_of :cppheaderimage, String, :name => "cpp-header-image", :namespace => :ebl
           # Sets the border color around the header of the flow page. The border is a 2-pixel perimeter around the header space, which is 750 pixels wide by 90 pixels high. Optional Character length and limitations: Six character HTML hexadecimal color code in ASCII 
-          object_of :cppheaderbordercolor, String, :namespace => :ebl
+          object_of :cppheaderbordercolor, String, :name => "cpp-header-border-color", :namespace => :ebl
           # Sets the background color for the header of the flow page. Optional Character length and limitation: Six character HTML hexadecimal color code in ASCII 
-          object_of :cppheaderbackcolor, String, :namespace => :ebl
+          object_of :cppheaderbackcolor, String, :name => "cpp-header-back-color", :namespace => :ebl
           # Sets the background color for the payment page. Optional Character length and limitation: Six character HTML hexadecimal color code in ASCII 
-          object_of :cpppayflowcolor, String, :namespace => :ebl
+          object_of :cpppayflowcolor, String, :name => "cpp-payflow-color", :namespace => :ebl
           # First Name of the user, this information is used if user chooses to signup with PayPal. Optional Character length and limitation: Six character HTML hexadecimal color code in ASCII 
           object_of :FirstName, String, :namespace => :ebl
           # Last Name of the user, this information is used if user chooses to signup with PayPal. Optional Character length and limitation: Six character HTML hexadecimal color code in ASCII 
@@ -2233,10 +2233,10 @@ module PayPal::SDK
           object_of :CancelURL, String, :namespace => :ebl, :required => true
           object_of :LocaleCode, String, :namespace => :ebl
           object_of :PageStyle, String, :namespace => :ebl
-          object_of :cppheaderimage, String, :namespace => :ebl
-          object_of :cppheaderbordercolor, String, :namespace => :ebl
-          object_of :cppheaderbackcolor, String, :namespace => :ebl
-          object_of :cpppayflowcolor, String, :namespace => :ebl
+          object_of :cppheaderimage, String, :name => "cpp-header-image", :namespace => :ebl
+          object_of :cppheaderbordercolor, String, :name => "cpp-header-border-color", :namespace => :ebl
+          object_of :cppheaderbackcolor, String, :name => "cpp-header-back-color", :namespace => :ebl
+          object_of :cpppayflowcolor, String, :name => "cpp-payflow-color", :namespace => :ebl
           object_of :BuyerEmail, String, :namespace => :ebl
           # The value 1 indicates that you require that the customer's billing address on file. Setting this element overrides the setting you have specified in Admin. Optional Character length and limitations: One single-byte numeric character.
           object_of :ReqBillingAddress, String, :namespace => :ebl

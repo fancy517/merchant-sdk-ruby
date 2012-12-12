@@ -9,6 +9,10 @@
     = active_li "Reverse transaction",  merchant_path(:reverse_transaction)
     = active_li "Do non referenced credit",  merchant_path(:do_non_referenced_credit)
     = active_li "Manage pending transaction status",  merchant_path(:manage_pending_transaction_status)
+    %li.nav-header Express Checkout
+    = active_li "Set express checkout", merchant_path(:set_express_checkout)
+    = active_li "Get express checkout", merchant_path(:get_express_checkout_details)
+    = active_li "Do express checkout", merchant_path(:do_express_checkout_payment)
     %li.nav-header Reporting
     = active_li "Transaction search", merchant_path(:transaction_search)
     = active_li "Get transaction details", merchant_path(:get_transaction_details)
