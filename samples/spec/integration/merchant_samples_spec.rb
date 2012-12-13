@@ -64,6 +64,27 @@ describe "MerchantSamples" do
     end
   end
 
+  describe "Express Checkout", :js => true do
+    it "check sample express checkout" do
+
+      visit "https://developer.paypal.com/"
+      fill_in "Email Address", :with => "platform.sdk.seller@gmail.com"
+      fill_in "Password", :with => "11111111"
+      click_button "Log In"
+
+      visit merchant_samples_path
+      check_sample "Set express checkout"
+      click_link "Redirect to PayPal to login"
+      fill_in "Email", :with => "platfo_1255077030_biz@gmail.com"
+      fill_in "PayPal password", :with => "11111111"
+      click_button "Log In"
+      first(:button, "Continue").click
+      click_button "Submit"
+      page.should have_content("Ack: Success")
+
+    end
+  end
+
   describe "Reference Transactions and Billing Agreemen" do
   end
 
