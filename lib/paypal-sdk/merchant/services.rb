@@ -1,5 +1,4 @@
 require 'paypal-sdk-core'
-require 'paypal-sdk/merchant/data_types'
 
 # AUTO GENERATED code for PayPalAPIInterfaceService
 module PayPal::SDK

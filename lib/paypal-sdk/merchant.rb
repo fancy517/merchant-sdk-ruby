@@ -6,7 +6,7 @@ module PayPal
 
       autoload :VERSION,   "paypal-sdk/merchant/version"
       autoload :Services,  "paypal-sdk/merchant/services"
-      autoload :DataTypes, "paypal-sdk/merchant/data_types"
+      autoload :DataTypes, "paypal-sdk/merchant/data_types_with_bugfix"
       autoload :API,       "paypal-sdk/merchant/api"
 
       def self.new(*args)
