@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = PayPal::SDK::Merchant::VERSION
   gem.authors       = ["PayPal"]
   gem.email         = ["DL-PP-Platform-Ruby-SDK@ebay.com"]
-  gem.description   = %q{Merchants SDK}
-  gem.summary       = %q{Merchants SDK}
+  gem.summary       = %q{PayPal Merchant SDK}
+  gem.description   = %q{The PayPal Merchant SDK provides Ruby APIs for processing payments, recurring payments, subscriptions and transactions using PayPal's Merchant APIs, which include Express Checkout, Recurring Payments, Direct Payment and Transactional APIs.}
   gem.homepage      = "https://www.x.com/"
 
   gem.files         = Dir["{bin,spec,lib}/**/*"] + ["Rakefile", "README.md", "Gemfile"]

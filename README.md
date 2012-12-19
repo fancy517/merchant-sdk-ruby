@@ -1,6 +1,6 @@
 # Merchant
 
-SDK for Merchant.
+The PayPal Merchant SDK provides Ruby APIs for processing payments, recurring payments, subscriptions and transactions using PayPal's Merchant APIs, which include Express Checkout, Recurring Payments, Direct Payment and Transactional APIs.
 
 ## Installation
 
