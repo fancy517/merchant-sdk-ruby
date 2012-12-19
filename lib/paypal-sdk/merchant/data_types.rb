@@ -586,6 +586,7 @@ module PayPal::SDK
         def self.load_members
           # Value of the application-specific error parameter.  
           object_of :Value, String, :namespace => :ebl
+          add_attribute :ParamID, :namespace => :ebl, :required => true
         end
       end
 
@@ -1764,6 +1765,7 @@ module PayPal::SDK
       class SubscriptionTermsType < DataType
         def self.load_members
           object_of :Amount, BasicAmountType, :namespace => :ebl
+          add_attribute :period, :namespace => :ebl, :required => true
         end
       end
 
@@ -1788,6 +1790,8 @@ module PayPal::SDK
           object_of :Recurrences, String, :namespace => :ebl
           # Subscription duration and charges
           array_of :Terms, SubscriptionTermsType, :namespace => :ebl
+          add_attribute :reattempt, :namespace => :ebl, :required => true
+          add_attribute :recurring, :namespace => :ebl, :required => true
         end
       end
 
@@ -1800,6 +1804,7 @@ module PayPal::SDK
           object_of :BuyerID, String, :namespace => :ebl
           # Auction's close date 
           object_of :ClosingDate, DateTime, :namespace => :ebl
+          add_attribute :multiItem, :namespace => :ebl, :required => true
         end
       end
 
@@ -1808,6 +1813,8 @@ module PayPal::SDK
       # OptionType PayPal item options for shopping cart. 
       class OptionType < DataType
         def self.load_members
+          add_attribute :name, :namespace => :ebl, :required => true
+          add_attribute :value, :namespace => :ebl, :required => true
         end
       end
 
