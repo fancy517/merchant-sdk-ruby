@@ -8,7 +8,7 @@ describe "Merchant" do
 
   describe "Services" do
     Actions  = PayPal::SDK::Merchant::Services.instance_methods.select{|s| s =~ /^[A-Z]/ and s !~ /^Build/ } -
-      [ :CompleteRecoup ]
+      [ :CompleteRecoup, "CompleteRecoup" ]
     Actions.each do |service_method|
       it "make empty request to #{service_method}" do
         response = @client.send(service_method, {})

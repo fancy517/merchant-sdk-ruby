@@ -17,7 +17,6 @@ with_certificate:
   signature:
   cert_path: "spec/config/cert_key.pem"
   app_id: APP-80W284485P519543T
-  soap_end_point: "https://api.sandbox.paypal.com/2.0/"
 
 with_oauth_token:
   <<: *default
