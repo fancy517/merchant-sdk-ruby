@@ -182,6 +182,13 @@ module PayPal::SDK
 
 
 
+      #  Normalization Status of the Address 
+      class AddressNormalizationStatusCodeType < EnumType
+        self.options = { 'NONE' => 'None', 'NORMALIZED' => 'Normalized', 'UNNORMALIZED' => 'Unnormalized' }
+      end
+
+
+
       #  PaymentDetailsCodeType This is the PayPal payment details type (used by DCC and Express Checkout) 
       class PaymentActionCodeType < EnumType
         self.options = { 'NONE' => 'None', 'AUTHORIZATION' => 'Authorization', 'SALE' => 'Sale', 'ORDER' => 'Order' }
@@ -254,7 +261,7 @@ module PayPal::SDK
 
       #  PendingStatusCodeType The pending status for a PayPal Payment transaction which matches the output from IPN 
       class PendingStatusCodeType < EnumType
-        self.options = { 'NONE' => 'none', 'ECHECK' => 'echeck', 'INTL' => 'intl', 'VERIFY' => 'verify', 'ADDRESS' => 'address', 'UNILATERAL' => 'unilateral', 'OTHER' => 'other', 'UPGRADE' => 'upgrade', 'MULTICURRENCY' => 'multi-currency', 'AUTHORIZATION' => 'authorization', 'ORDER' => 'order', 'PAYMENTREVIEW' => 'payment-review' }
+        self.options = { 'NONE' => 'none', 'ECHECK' => 'echeck', 'INTL' => 'intl', 'VERIFY' => 'verify', 'ADDRESS' => 'address', 'UNILATERAL' => 'unilateral', 'OTHER' => 'other', 'UPGRADE' => 'upgrade', 'MULTICURRENCY' => 'multi-currency', 'AUTHORIZATION' => 'authorization', 'ORDER' => 'order', 'PAYMENTREVIEW' => 'payment-review', 'REGULATORYREVIEW' => 'regulatory-review' }
       end
 
 
@@ -689,6 +696,8 @@ module PayPal::SDK
           object_of :InternationalStreet, String, :namespace => :ebl
           # Status of the address on file with PayPal. IMPORTANT: Do not set this element for SetExpressCheckout, DoExpressCheckoutPayment, DoDirectPayment, CreateRecurringPaymentsProfile or UpdateRecurringPaymentsProfile. 
           object_of :AddressStatus, AddressStatusCodeType, :namespace => :ebl
+          # Returns Normalization Status of the Address. Possible values are Normalized, Unnormalized, and None. 
+          object_of :AddressNormalizationStatus, AddressNormalizationStatusCodeType, :namespace => :ebl
         end
       end
 
@@ -1710,7 +1719,7 @@ module PayPal::SDK
           object_of :ExchangeRate, String, :namespace => :ebl
           # The status of the payment: None: No status Created: A giropay payment has been initiated. Canceled-Reversal: A reversal has been canceled. For example, you won a dispute with the customer, and the funds for the transaction that was reversed have been returned to you. Completed: The payment has been completed, and the funds have been added successfully to your account balance. Denied: You denied the payment. This happens only if the payment was previously pending because of possible reasons described for the PendingReason element. Expired: This authorization has expired and cannot be captured. Failed: The payment has failed. This happens only if the payment was made from your customer's bank account. In-Progress: The transaction is in process of authorization and capture. Partially-Refunded: The transaction has been partially refunded. Pending: The payment is pending. See "PendingReason" for more information. Refunded: You refunded the payment. Reversed: A payment was reversed due to a chargeback or other type of reversal. The funds have been removed from your account balance and returned to the buyer. The reason for the reversal is specified in the ReasonCode element. Processed: A payment has been accepted. Voided: This authorization has been voided. Completed-Funds-Held: The payment has been completed, and the funds have been added successfully to your pending balance. See the "HoldDecision" field for more information.
           object_of :PaymentStatus, PaymentStatusCodeType, :namespace => :ebl
-          # The reason the payment is pending: none: No pending reason address: The payment is pending because your customer did not include a confirmed shipping address and your Payment Receiving Preferences is set such that you want to manually accept or deny each of these payments. To change your preference, go to the Preferences section of your Profile. authorization: You set PaymentAction to Authorization on SetExpressCheckoutRequest and have not yet captured funds. echeck: The payment is pending because it was made by an eCheck that has not yet cleared. intl: The payment is pending because you hold a non-U.S. account and do not have a withdrawal mechanism. You must manually accept or deny this payment from your Account Overview. multi-currency: You do not have a balance in the currency sent, and you do not have your Payment Receiving Preferences set to automatically convert and accept this payment. You must manually accept or deny this payment. unilateral: The payment is pending because it was made to an email address that is not yet registered or confirmed. upgrade: The payment is pending because it was made via credit card and you must upgrade your account to Business or Premier status in order to receive the funds. upgrade can also mean that you have reached the monthly limit for transactions on your account. verify: The payment is pending because you are not yet verified. You must verify your account before you can accept this payment. other: The payment is pending for a reason other than those listed above. For more information, contact PayPal Customer Service.
+          # The reason the payment is pending: none: No pending reason address: The payment is pending because your customer did not include a confirmed shipping address and your Payment Receiving Preferences is set such that you want to manually accept or deny each of these payments. To change your preference, go to the Preferences section of your Profile. authorization: You set PaymentAction to Authorization on SetExpressCheckoutRequest and have not yet captured funds. echeck: The payment is pending because it was made by an eCheck that has not yet cleared. intl: The payment is pending because you hold a non-U.S. account and do not have a withdrawal mechanism. You must manually accept or deny this payment from your Account Overview. multi-currency: You do not have a balance in the currency sent, and you do not have your Payment Receiving Preferences set to automatically convert and accept this payment. You must manually accept or deny this payment. unilateral: The payment is pending because it was made to an email address that is not yet registered or confirmed. upgrade: The payment is pending because it was made via credit card and you must upgrade your account to Business or Premier status in order to receive the funds. upgrade can also mean that you have reached the monthly limit for transactions on your account. verify: The payment is pending because you are not yet verified. You must verify your account before you can accept this payment. regulatory-review: This payment is pending while we make sure it meets regulatory requirements. We'll contact you again in 24-72 hours with the outcome of our review. other: The payment is pending for a reason other than those listed above. For more information, contact PayPal Customer Service.
           object_of :PendingReason, PendingStatusCodeType, :namespace => :ebl
           # The reason for a reversal if TransactionType is reversal: none: No reason code chargeback: A reversal has occurred on this transaction due to a chargeback by your customer. guarantee: A reversal has occurred on this transaction due to your customer triggering a money-back guarantee. buyer-complaint: A reversal has occurred on this transaction due to a complaint about the transaction from your customer. refund: A reversal has occurred on this transaction because you have given the customer a refund. other: A reversal has occurred on this transaction due to a reason not listed above.
           object_of :ReasonCode, ReversalReasonCodeType, :namespace => :ebl

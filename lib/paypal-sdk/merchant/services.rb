@@ -5,7 +5,7 @@ module PayPal::SDK
   module Merchant
 
 	  # Service Version
-	  SERVICE_VERSION = "94.0"
+	  SERVICE_VERSION = "98.0"
 	  # Service Name
 	  SERVICE_NAME = "PayPalAPIInterfaceService"
 
