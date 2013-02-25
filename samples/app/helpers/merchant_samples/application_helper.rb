@@ -19,7 +19,7 @@ module MerchantSamples
 
     def generate_code(api_request, api_response)
       request_hash= api_request.to_hash(:namespace => false, :attribute => false)
-      request_hash.delete(:Version)
+      request_hash.delete("Version")
       # request_hash  = get_dotted_hash(request_hash)
       response_hash = api_response.to_hash(:namespace => false, :attribute => false)
       ruby_code   = render("ruby_code.rb", :request_hash => request_hash, :response_hash => response_hash)

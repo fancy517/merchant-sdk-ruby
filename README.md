@@ -115,22 +115,35 @@ To get response status:
 
 ```ruby
 require 'paypal-sdk-merchant'
-@api = PayPal::SDK::Merchant::API.new
+@api = PayPal::SDK::Merchant::API.new(
+  :mode      => "sandbox",  # Set "live" for production
+  :app_id    => "APP-80W284485P519543T",
+  :username  => "jb-us-seller_api1.paypal.com",
+  :password  => "WX4WTU3S8MY44S7F",
+  :signature => "AFcWxV21C7fd0v3bYYYRCpSSRl31A7yDhhsPUU2XhtMoZXsWHFxu-RWy" )
 
 # Build request object
-@transaction_search_request = @api.build_transaction_search()
-@transaction_search_request.StartDate = "2012-11-11T11:30:00+00:00"
-@transaction_search_request.EndDate   = "2012-11-11T11:31:00+00:00"
+@do_direct_payment = @api.build_do_direct_payment({
+  :DoDirectPaymentRequestDetails => {
+    :PaymentAction => "Sale",
+    :PaymentDetails => {
+      :OrderTotal => {
+        :currencyID => "USD",
+        :value => "1" },
+      :NotifyURL => "http://localhost:3000/samples/merchant/ipn_notify" },
+    :CreditCard => {
+      :CreditCardType => "Visa",
+      :CreditCardNumber => "4904202183894535",
+      :ExpMonth => 12,
+      :ExpYear => 2022,
+      :CVV2 => "962" } } })
 
 # Make API call & get response
-@transaction_search_response = @api.transaction_search(@transaction_search_request)
+@do_direct_payment_response = @api.do_direct_payment(@do_direct_payment)
 
 # Access Response
-@transaction_search_response.Timestamp
-@transaction_search_response.Ack
-@transaction_search_response.CorrelationID
-@transaction_search_response.Version
-@transaction_search_response.Build
+@do_direct_payment_response.Ack
+@do_direct_payment_response.TransactionID
 ```
 
 ## Samples
