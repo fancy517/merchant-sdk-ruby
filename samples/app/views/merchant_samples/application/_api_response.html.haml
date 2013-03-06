@@ -3,9 +3,6 @@
     %b Ruby Code:
     = CodeRay.scan(generate_code(request, response), "ruby").div.html_safe
   %p
-    %b Request:
-    = CodeRay.scan(request.to_hash(:symbol => false, :namespace => false).to_yaml, "yaml").div.html_safe
-  %p
     %b Response:
-    = CodeRay.scan(response.to_hash(:symbol => false, :namespace => false).to_yaml, "yaml").div.html_safe
+    = CodeRay.scan(format_hash(response.to_hash(:attribute => false, :namespace => false)), "ruby").div.html_safe
 

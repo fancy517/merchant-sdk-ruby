@@ -80,8 +80,7 @@ describe "MerchantSamples" do
       click_button "Log In"
       first(:button, "Continue").click
       click_button "Submit"
-      page.should have_content("Ack: Success")
-
+      page_should_have_success
     end
   end
 
