@@ -82,7 +82,7 @@ describe "MerchantSamples" do
       click_button "Submit"
       page_should_have_success
     end
-  end
+  end if ENV["SELENIUM"]
 
   describe "Reference Transactions and Billing Agreemen" do
   end
