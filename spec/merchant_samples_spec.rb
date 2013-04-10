@@ -16,10 +16,20 @@ describe "Merchant" do
 
       # Make API call & get response
       @transaction_search_response = @api.transaction_search(@transaction_search)
-      @transaction_search_response.Ack.should eql "Success"
+      @transaction_search_response.should be_success
+      @transaction_search_response.should_not be_failure
+
+      @transaction_search_response = @api.transaction_search({})
+      @transaction_search_response.should be_failure
+      @transaction_search_response.should_not be_success
 
       @transaction_search_response = @api_with_cert.transaction_search(@transaction_search)
-      @transaction_search_response.Ack.should eql "Success"
+      @transaction_search_response.should be_success
+      @transaction_search_response.should_not be_failure
+
+      @transaction_search_response = @api_with_cert.transaction_search({})
+      @transaction_search_response.should be_failure
+      @transaction_search_response.should_not be_success
     end
 
     it "get balance" do
@@ -30,7 +40,7 @@ describe "Merchant" do
       # Make API call & get response
       @get_balance_response = @api.get_balance(@get_balance)
 
-      @get_balance_response.Ack.should eql "Success"
+      @get_balance_response.should be_success
     end
 
     it "get pal detail" do
@@ -40,7 +50,7 @@ describe "Merchant" do
       # Make API call & get response
       @get_pal_details_response = @api.get_pal_details(@get_pal_details)
 
-      @get_pal_details_response.Ack.should eql "Success"
+      @get_pal_details_response.should be_success
     end
 
     it "Set auth flow param" do
@@ -53,7 +63,7 @@ describe "Merchant" do
       # Make API call & get response
       @set_auth_flow_param_response = @api.set_auth_flow_param(@set_auth_flow_param)
 
-      @set_auth_flow_param_response.Ack.should eql "Success"
+      @set_auth_flow_param_response.should be_success
     end
 
 
@@ -83,11 +93,11 @@ describe "Merchant" do
 
       # Make API call & get response
       @do_direct_payment_response = @api.do_direct_payment(@do_direct_payment)
-      @do_direct_payment_response.Ack.should eql "Success"
+      @do_direct_payment_response.should be_success
 
       # Make API call & get response
       @do_direct_payment_response = @api_with_cert.do_direct_payment(@do_direct_payment)
-      @do_direct_payment_response.Ack.should eql "Success"
+      @do_direct_payment_response.should be_success
     end
 
     it "Mass pay" do
@@ -102,7 +112,7 @@ describe "Merchant" do
 
       # Make API call & get response
       @mass_pay_response = @api.mass_pay(@mass_pay)
-      @mass_pay_response.Ack.should eql "Success"
+      @mass_pay_response.should be_success
     end
   end
 end
