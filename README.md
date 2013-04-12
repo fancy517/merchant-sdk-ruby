@@ -91,8 +91,12 @@ require 'paypal-sdk-merchant'
 @do_direct_payment_response = @api.do_direct_payment(@do_direct_payment)
 
 # Access Response
-@do_direct_payment_response.Ack
-@do_direct_payment_response.TransactionID
+if @do_direct_payment_response.success?
+  print @do_direct_payment_response.TransactionID
+else
+  print @do_direct_payment_response.Errors
+end
+
 ```
 
 For more samples [paypal-sdk-samples.herokuapp.com/merchant/](https://paypal-sdk-samples.herokuapp.com/merchant/)
