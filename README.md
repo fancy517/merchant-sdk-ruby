@@ -92,9 +92,9 @@ require 'paypal-sdk-merchant'
 
 # Access Response
 if @do_direct_payment_response.success?
-  print @do_direct_payment_response.TransactionID
+  @do_direct_payment_response.TransactionID
 else
-  print @do_direct_payment_response.Errors
+  @do_direct_payment_response.Errors
 end
 
 ```
