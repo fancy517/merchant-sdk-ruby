@@ -5,6 +5,7 @@ module PayPal
     module Merchant
       class API < Core::API::Merchant
         include Services
+        include Urls
 
         def initialize(environment = nil, options = {})
           super("", environment, options)
