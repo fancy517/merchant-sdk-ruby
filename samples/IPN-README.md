@@ -14,7 +14,8 @@ Validate IPN data :
 Add the following line in IPN Listener to validate the data:
 
 ```ruby
-if PayPal::SDK::Core::API::IPN.valid?(request.raw_post)  # return true or false
+@api = PayPal::SDK::Merchant.new
+if @api.ipn_valid?(request.raw_post)  # return true or false
   # params contains the data
 end
 ```

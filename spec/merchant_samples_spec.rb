@@ -114,5 +114,10 @@ describe "Merchant" do
       @mass_pay_response = @api.mass_pay(@mass_pay)
       @mass_pay_response.should be_success
     end
+
+    it "Validate ipn message" do
+      @api.ipn_valid?("Invalid").should be_false
+    end
+
   end
 end
