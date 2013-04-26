@@ -34,8 +34,5 @@
 
 - if @set_express_checkout_response
   = render 'api_response', :request => @set_express_checkout, :response => @set_express_checkout_response
-  - if @set_express_checkout_response.Ack == "Success"
-    = link_to "Redirect to PayPal to login",
-      "https://www.sandbox.paypal.com/webscr?cmd=_express-checkout&token=#{@set_express_checkout_response.Token}"
-
-
+  - if @set_express_checkout_response.success?
+    = link_to "Redirect to PayPal to login", @api.express_checkout_url(@set_express_checkout_response)
