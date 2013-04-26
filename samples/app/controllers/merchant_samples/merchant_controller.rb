@@ -9,7 +9,7 @@ module MerchantSamples
     end
 
     def ipn_notify
-      if PayPal::SDK::Core::API::IPN.valid?(request.raw_post)
+      if api.ipn_valid?(request.raw_post)
         logger.info("IPN message: VERIFIED")
         render :text => "VERIFIED"
       else
