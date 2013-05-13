@@ -57,19 +57,21 @@ production:
 Load Configurations from specified file:
 
 ```ruby
-PayPal::SDK::Core::Config.load('config/paypal.yml',  ENV['RACK_ENV'] || 'development')
+PayPal::SDK.load('config/paypal.yml',  ENV['RACK_ENV'] || 'development')
 ```
 
 ## Example
 
 ```ruby
 require 'paypal-sdk-merchant'
-@api = PayPal::SDK::Merchant::API.new(
+PayPal::SDK.configure(
   :mode      => "sandbox",  # Set "live" for production
   :app_id    => "APP-80W284485P519543T",
   :username  => "jb-us-seller_api1.paypal.com",
   :password  => "WX4WTU3S8MY44S7F",
   :signature => "AFcWxV21C7fd0v3bYYYRCpSSRl31A7yDhhsPUU2XhtMoZXsWHFxu-RWy" )
+
+@api = PayPal::SDK::Merchant.new
 
 # Build request object
 @do_direct_payment = @api.build_do_direct_payment({
@@ -88,15 +90,14 @@ require 'paypal-sdk-merchant'
       :CVV2 => "962" } } })
 
 # Make API call & get response
-@do_direct_payment_response = @api.do_direct_payment(@do_direct_payment)
+@response = @api.do_direct_payment(@do_direct_payment)
 
 # Access Response
-if @do_direct_payment_response.success?
-  @do_direct_payment_response.TransactionID
+if @response.success?
+  @response.TransactionID
 else
-  @do_direct_payment_response.Errors
+  @response.Errors
 end
-
 ```
 
 For more samples [paypal-sdk-samples.herokuapp.com/merchant/](https://paypal-sdk-samples.herokuapp.com/merchant/)
@@ -123,4 +124,3 @@ rails g paypal:sdk:install
 ```
 
 Run `rails server` and check the samples.
-
