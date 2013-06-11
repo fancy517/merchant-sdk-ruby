@@ -4648,6 +4648,8 @@ module PayPal::SDK
         def self.load_members
           # Indicates whether the phone is activated for mobile payments 
           object_of :IsActivated, Integer, :namespace => :ns, :required => true
+          # Indicates whether the password is enabled for particular account 
+          object_of :IsPasswordSet, Integer, :namespace => :ns, :required => true
           # Indicates whether there is a payment pending from the phone 
           object_of :PaymentPending, Integer, :namespace => :ns, :required => true
         end
