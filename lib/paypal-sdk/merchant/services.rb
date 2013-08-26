@@ -5,7 +5,7 @@ module PayPal::SDK
   module Merchant
 
 	  # Service Version
-	  SERVICE_VERSION = "98.0"
+	  SERVICE_VERSION = "106.0"
 	  # Service Name
 	  SERVICE_NAME = "PayPalAPIInterfaceService"
 
@@ -768,6 +768,27 @@ module PayPal::SDK
         object
       end
       alias_method :build_do_authorization, :BuildDoAuthorization
+
+      # Service Call: UpdateAuthorization
+      # @param UpdateAuthorizationReq
+      # @return UpdateAuthorizationResponseType
+      def UpdateAuthorization(options = {} , http_header = {})
+        request_object  = BuildUpdateAuthorization(options)
+        request_hash    = request_object.to_hash
+        response_hash   = request("UpdateAuthorization", request_hash, http_header)
+        UpdateAuthorizationResponseType.new(response_hash)
+      end
+      alias_method :update_authorization, :UpdateAuthorization
+
+      def BuildUpdateAuthorization(options = {}, &block)
+        klass     = UpdateAuthorizationReq
+        options = klass.new(:UpdateAuthorizationRequest => options) unless options.is_a?(klass)
+        object = (options.UpdateAuthorizationRequest ||= {})
+        object.version = SERVICE_VERSION
+        object.instance_eval(&block) if block
+        object
+      end
+      alias_method :build_update_authorization, :BuildUpdateAuthorization
 
       # Service Call: SetCustomerBillingAgreement
       # @param SetCustomerBillingAgreementReq

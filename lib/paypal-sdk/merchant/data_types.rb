@@ -177,6 +177,13 @@ module PayPal::SDK
 
 
 
+      #  It defines the enumerated types of the user channels defined in biz/User/value_object/Channel.oml 
+      class UserChannelCodeType < EnumType
+        self.options = { 'WEB' => 'WEB', 'MOBILE' => 'MOBILE', 'POS' => 'POS', 'KIOSK' => 'KIOSK', 'IHSTB' => 'IHSTB', 'IVR' => 'IVR', 'ADMIN' => 'ADMIN', 'CSOPS' => 'CSOPS' }
+      end
+
+
+
       #  PaymentTransactionCodeType This is the type of a PayPal of which matches the output from IPN 
       class PaymentTransactionCodeType < EnumType
         self.options = { 'NONE' => 'none', 'WEBACCEPT' => 'web-accept', 'CART' => 'cart', 'SENDMONEY' => 'send-money', 'SUBSCRFAILED' => 'subscr-failed', 'SUBSCRCANCEL' => 'subscr-cancel', 'SUBSCRPAYMENT' => 'subscr-payment', 'SUBSCRSIGNUP' => 'subscr-signup', 'SUBSCREOT' => 'subscr-eot', 'SUBSCRMODIFY' => 'subscr-modify', 'MERCHTPMT' => 'mercht-pmt', 'MASSPAY' => 'mass-pay', 'VIRTUALTERMINAL' => 'virtual-terminal', 'INTEGRALEVOLUTION' => 'integral-evolution', 'EXPRESSCHECKOUT' => 'express-checkout', 'PROHOSTED' => 'pro-hosted', 'PROAPI' => 'pro-api', 'CREDIT' => 'credit' }
@@ -200,7 +207,7 @@ module PayPal::SDK
 
       #  Normalization Status of the Address 
       class AddressNormalizationStatusCodeType < EnumType
-        self.options = { 'NONE' => 'None', 'NORMALIZED' => 'Normalized', 'UNNORMALIZED' => 'Unnormalized' }
+        self.options = { 'NONE' => 'None', 'NORMALIZED' => 'Normalized', 'UNNORMALIZED' => 'Unnormalized', 'USERPREFERRED' => 'UserPreferred' }
       end
 
 
@@ -978,6 +985,16 @@ module PayPal::SDK
           object_of :BuyerDetail, BuyerDetailType, :namespace => :ebl
           # Requests for specific buyer information like Billing Address to be returned through GetExpressCheckoutDetails should be specified under this. 
           object_of :InfoSharingDirectives, InfoSharingDirectivesType, :namespace => :ebl
+          # The value 1 indicates that you require to retrieve the customer's shipping address on file with PayPal. Any value other than 1 indicates that no such requirement. 
+          object_of :RetrieveShippingAddress, Boolean, :namespace => :ebl
+          # the value is required by ACS team to specify the channel which the partners are in. the channel will be used for risk assessment the value is defined in biz/User/value_object/Channel.oml Optional 
+          object_of :UserChannel, UserChannelCodeType, :namespace => :ebl
+          # The value 1 indicates that you require that the customer's shipping address on file with PayPal be a confirmed address. Any value other than 1 indicates that the customer's shipping address on file with PayPal need NOT be a confirmed address. Setting this element overrides the setting you have specified in the recipient's Merchant Account Profile. Optional 
+          object_of :ReqConfirmShipping, Boolean, :namespace => :ebl
+          # Information about the payment. 
+          array_of :PaymentDetails, PaymentDetailsType, :namespace => :ebl
+          # An optional set of values related to tracking for external partner. 
+          object_of :ExternalPartnerTrackingDetails, ExternalPartnerTrackingDetailsType, :namespace => :ebl
         end
       end
 
@@ -1188,6 +1205,7 @@ module PayPal::SDK
         def self.load_members
           # If Checkout session was initialized successfully, the corresponding token is returned in this element. 
           object_of :Token, String, :namespace => :ebl
+          array_of :ShippingAddresses, AddressType, :namespace => :ebl
           array_of :SetDataError, ErrorType, :namespace => :ebl
         end
       end
@@ -1207,6 +1225,11 @@ module PayPal::SDK
 
       # How you want to obtain payment. Required Authorization indicates that this payment is a basic authorization subject to settlement with PayPal Authorization and Capture. Order indicates that this payment is is an order authorization subject to settlement with PayPal Authorization and Capture. Sale indicates that this is a final sale for which you are requesting payment. IMPORTANT: You cannot set PaymentAction to Sale on SetExpressCheckoutRequest and then change PaymentAction to Authorization on the final Express Checkout API, DoExpressCheckoutPaymentRequest. Character length and limit: Up to 13 single-byte alphabetic characters 
       class DoExpressCheckoutPaymentRequestDetailsType < DataType
+       def initialize(options={})
+         super
+         self.ButtonSource ||= "PayPal_SDK"
+       end
+
         def self.load_members
           # How you want to obtain payment. Required Authorization indicates that this payment is a basic authorization subject to settlement with PayPal Authorization and Capture. Order indicates that this payment is is an order authorization subject to settlement with PayPal Authorization and Capture. Sale indicates that this is a final sale for which you are requesting payment. IMPORTANT: You cannot set PaymentAction to Sale on SetExpressCheckoutRequest and then change PaymentAction to Authorization on the final Express Checkout API, DoExpressCheckoutPaymentRequest. Character length and limit: Up to 13 single-byte alphabetic characters
           object_of :PaymentAction, PaymentActionCodeType, :namespace => :ebl
@@ -1557,6 +1580,11 @@ module PayPal::SDK
 
       # MerchantPullPayment Parameters to make initiate a pull payment 
       class MerchantPullPaymentType < DataType
+       def initialize(options={})
+         super
+         self.ButtonSource ||= "PayPal_SDK"
+       end
+
         def self.load_members
           # The amount to charge to the customer. Required Only numeric characters and a decimal separator are allowed. Limit: 10 single-byte characters, including two for decimals You must set the currencyID attribute to one of the three-character currency code for any of the supported PayPal currencies. 
           object_of :Amount, BasicAmountType, :namespace => :ebl
@@ -1780,7 +1808,7 @@ module PayPal::SDK
           object_of :InstrumentDetails, InstrumentDetailsType, :namespace => :ebl
           # Offer Details. 
           object_of :OfferDetails, OfferDetailsType, :namespace => :ebl
-          # This field indicates whether the credit card number used for this transaction is in a particular bin range registered with PayPal by the merchant. This filed is optional and will be present if merchant has a registered bin range. The value of this field will be “true” if merchant has a registered bin range and the credit card used in the transaction is within the registered bin range. The value of this field will be false if merchant has a registered bin range and credit card used in the transaction outside registered bin range or the transaction is not done using a credit card. 
+          # This field indicates whether the credit card number used for this transaction is in a particular bin range registered with PayPal by the merchant. This filed is optional and will be present if merchant has a registered bin range. The value of this field will be "true" if merchant has a registered bin range and the credit card used in the transaction is within the registered bin range. The value of this field will be false if merchant has a registered bin range and credit card used in the transaction outside registered bin range or the transaction is not done using a credit card. 
           object_of :BinEligibility, String, :namespace => :ebl
         end
       end
@@ -1979,6 +2007,11 @@ module PayPal::SDK
 
       # PaymentDetailsType Information about a payment. Used by DCC and Express Checkout. 
       class PaymentDetailsType < DataType
+       def initialize(options={})
+         super
+         self.ButtonSource ||= "PayPal_SDK"
+       end
+
         def self.load_members
           # Total of order, including shipping, handling, and tax. You must set the currencyID attribute to one of the three-character currency codes for any of the supported PayPal currencies. Limitations: Must not exceed $10,000 USD in any currency. No currency symbol. Decimal separator must be a period (.), and the thousands separator must be a comma (,). 
           object_of :OrderTotal, BasicAmountType, :namespace => :ebl
@@ -2002,6 +2035,8 @@ module PayPal::SDK
           object_of :NotifyURL, String, :namespace => :ebl
           # Address the order will be shipped to. Optional If you include the ShipToAddress element, the AddressType elements are required: Name Street1 CityName CountryCode Do not set set the CountryName element. 
           object_of :ShipToAddress, AddressType, :namespace => :ebl
+          # The value 1 indicates that this payment is associated with multiple shipping addresses. Optional Character length and limitations: Four single-byte numeric characters. 
+          object_of :MultiShipping, String, :namespace => :ebl
           # Thirdparty Fulfillment Reference Number. Optional Character length and limitations: 32 alphanumeric characters. 
           object_of :FulfillmentReferenceNumber, String, :namespace => :ebl
           object_of :FulfillmentAddress, AddressType, :namespace => :ebl
@@ -2378,7 +2413,7 @@ module PayPal::SDK
           object_of :ImageUrl, String, :namespace => :ebl
           # Marketing category tha configures the graphic displayed n the PayPal Partner Welcome page.
           object_of :MarketingCategory, MarketingCategoryType, :namespace => :ebl
-          # Information about the merchant’s business
+          # Information about the merchantâs business
           object_of :BusinessInfo, BusinessInfoType, :namespace => :ebl
           # Information about the merchant (the business owner)
           object_of :OwnerInfo, BusinessOwnerInfoType, :namespace => :ebl
@@ -2396,9 +2431,9 @@ module PayPal::SDK
           object_of :Type, BusinessTypeType, :namespace => :ebl
           # Official name of business Character length and limitations: 75 alphanumeric characters
           object_of :Name, String, :namespace => :ebl
-          # Merchant’s business postal address
+          # Merchantâs business postal address
           object_of :Address, AddressType, :namespace => :ebl
-          # Business’s primary telephone number Character length and limitations: 20 alphanumeric characters
+          # Businessâs primary telephone number Character length and limitations: 20 alphanumeric characters
           object_of :WorkPhone, String, :namespace => :ebl
           # Line of business, as defined in the enumerations
           object_of :Category, BusinessCategoryType, :namespace => :ebl
@@ -2414,11 +2449,11 @@ module PayPal::SDK
           object_of :Website, String, :namespace => :ebl
           # Percentage of revenue attributable to online sales, as defined by the enumerations Enumeration Meaning PercentageRevenueFromOnlineSales-Not-Applicable PercentageRevenueFromOnlineSales-Range1 Less than 25% PercentageRevenueFromOnlineSales-Range2 25% to 50% PercentageRevenueFromOnlineSales-Range3 50% to 75% PercentageRevenueFromOnlineSales-Range4 75% to 100% 
           object_of :RevenueFromOnlineSales, PercentageRevenueFromOnlineSalesType, :namespace => :ebl
-          # Date the merchant’s business was established
+          # Date the merchantâs business was established
           object_of :BusinessEstablished, DateTime, :namespace => :ebl
-          # Email address to contact business’s customer service Character length and limitations: 127 alphanumeric characters
+          # Email address to contact businessâs customer service Character length and limitations: 127 alphanumeric characters
           object_of :CustomerServiceEmail, String, :namespace => :ebl
-          # Telephone number to contact business’s customer service Character length and limitations: 32 alphanumeric characters
+          # Telephone number to contact businessâs customer service Character length and limitations: 32 alphanumeric characters
           object_of :CustomerServicePhone, String, :namespace => :ebl
         end
       end
@@ -2430,11 +2465,11 @@ module PayPal::SDK
         def self.load_members
           # Details about the business owner
           object_of :Owner, PayerInfoType, :namespace => :ebl
-          # Business owner’s home telephone number Character length and limitations: 32 alphanumeric characters
+          # Business ownerâs home telephone number Character length and limitations: 32 alphanumeric characters
           object_of :HomePhone, String, :namespace => :ebl
-          # Business owner’s mobile telephone number Character length and limitations: 32 alphanumeric characters
+          # Business ownerâs mobile telephone number Character length and limitations: 32 alphanumeric characters
           object_of :MobilePhone, String, :namespace => :ebl
-          # Business owner’s social security number Character length and limitations: 9 alphanumeric characters
+          # Business ownerâs social security number Character length and limitations: 9 alphanumeric characters
           object_of :SSN, String, :namespace => :ebl
         end
       end
@@ -2448,9 +2483,9 @@ module PayPal::SDK
           object_of :Name, String, :namespace => :ebl
           # Type of bank account: Checking or Savings
           object_of :Type, BankAccountTypeType, :namespace => :ebl
-          # Merchant’s bank routing number Character length and limitations: 23 alphanumeric characters
+          # Merchantâs bank routing number Character length and limitations: 23 alphanumeric characters
           object_of :RoutingNumber, String, :namespace => :ebl
-          # Merchant’s bank account number Character length and limitations: 256 alphanumeric characters
+          # Merchantâs bank account number Character length and limitations: 256 alphanumeric characters
           object_of :AccountNumber, String, :namespace => :ebl
         end
       end
@@ -2464,9 +2499,9 @@ module PayPal::SDK
           object_of :Status, BoardingStatusType, :namespace => :ebl
           # Date the boarding process started
           object_of :StartDate, DateTime, :namespace => :ebl
-          # Date the merchant’s status or progress was last updated
+          # Date the merchantâs status or progress was last updated
           object_of :LastUpdated, DateTime, :namespace => :ebl
-          # Reason for merchant’s cancellation of sign-up. Character length and limitations: 1,024 alphanumeric characters
+          # Reason for merchantâs cancellation of sign-up. Character length and limitations: 1,024 alphanumeric characters
           object_of :Reason, String, :namespace => :ebl
           object_of :ProgramName, String, :namespace => :ebl
           object_of :ProgramCode, String, :namespace => :ebl
@@ -2477,7 +2512,7 @@ module PayPal::SDK
           object_of :PartnerCustom, String, :namespace => :ebl
           # Details about the owner of the account
           object_of :AccountOwner, PayerInfoType, :namespace => :ebl
-          # Merchant’s PayPal API credentials
+          # Merchantâs PayPal API credentials
           object_of :Credentials, APICredentialsType, :namespace => :ebl
           # The APIs that this merchant has granted the business partner permission to call on his behalf. For example: SetExpressCheckout,GetExpressCheckoutDetails,DoExpressCheckoutPayment
           object_of :ConfigureAPIs, String, :namespace => :ebl
@@ -2495,15 +2530,15 @@ module PayPal::SDK
       # APICredentialsType 
       class APICredentialsType < DataType
         def self.load_members
-          # Merchant’s PayPal API usernameCharacter length and limitations: 128 alphanumeric characters
+          # Merchantâs PayPal API usernameCharacter length and limitations: 128 alphanumeric characters
           object_of :Username, String, :namespace => :ebl
-          # Merchant’s PayPal API passwordCharacter length and limitations: 40 alphanumeric characters
+          # Merchantâs PayPal API passwordCharacter length and limitations: 40 alphanumeric characters
           object_of :Password, String, :namespace => :ebl
-          # Merchant’s PayPal API signature, if one exists. Character length and limitations: 256 alphanumeric characters
+          # Merchantâs PayPal API signature, if one exists. Character length and limitations: 256 alphanumeric characters
           object_of :Signature, String, :namespace => :ebl
-          # Merchant’s PayPal API certificate in PEM format, if one exists The certificate consists of two parts: the private key (2,048 bytes) and the certificate proper (4,000 bytes). Character length and limitations: 6,048 alphanumeric characters
+          # Merchantâs PayPal API certificate in PEM format, if one exists The certificate consists of two parts: the private key (2,048 bytes) and the certificate proper (4,000 bytes). Character length and limitations: 6,048 alphanumeric characters
           object_of :Certificate, String, :namespace => :ebl
-          # Merchant’s PayPal API authentication mechanism. Auth-None: no authentication mechanism on file Cert: API certificate Sign: API signature Character length and limitations: 9 alphanumeric characters
+          # Merchantâs PayPal API authentication mechanism. Auth-None: no authentication mechanism on file Cert: API certificate Sign: API signature Character length and limitations: 9 alphanumeric characters
           object_of :Type, APIAuthenticationType, :namespace => :ebl
         end
       end
@@ -3221,6 +3256,27 @@ module PayPal::SDK
 
 
 
+      # This holds single key-value pair. 
+      class TupleType < DataType
+        def self.load_members
+          # Key Name.Optional
+          object_of :Key, String, :namespace => :ebl, :required => true
+          # Value for the above key.Optional
+          object_of :Value, String, :namespace => :ebl, :required => true
+        end
+      end
+
+
+
+      # This holds all key-value pairs which merchants wants to pass it to the open wallet(PLCC) processor. 
+      class MerchantDataType < DataType
+        def self.load_members
+          array_of :MerchantDataTuple, TupleType, :namespace => :ebl
+        end
+      end
+
+
+
       class EnhancedCheckoutDataType < DataType
         def self.load_members
         end
@@ -3869,6 +3925,11 @@ module PayPal::SDK
 
       # Subject line of the email sent to all recipients. This subject is not contained in the input file; you must create it with your application. Optional Character length and limitations: 255 single-byte alphanumeric characters 
       class MassPayRequestType < AbstractRequestType
+       def initialize(options={})
+         super
+         self.ButtonSource ||= "PayPal_SDK"
+       end
+
         def self.load_members
           # Subject line of the email sent to all recipients. This subject is not contained in the input file; you must create it with your application. Optional Character length and limitations: 255 single-byte alphanumeric characters
           object_of :EmailSubject, String, :namespace => :ns
@@ -4442,6 +4503,8 @@ module PayPal::SDK
           object_of :MerchantStoreDetails, MerchantStoreDetailsType, :namespace => :ebl
           # Unique id for each API request to prevent duplicate payments. Optional Character length and limits: 38 single-byte characters maximum. 
           object_of :MsgSubID, String, :namespace => :ns
+          # This holds key-value pair which merchants wants to pass it to the open wallet-PLCC processorOptional 
+          object_of :MerchantData, MerchantDataType, :namespace => :ebl
         end
       end
 
@@ -4541,8 +4604,30 @@ module PayPal::SDK
           object_of :TransactionEntity, TransactionEntityType, :namespace => :ns
           # Amount to authorize. Required Limitations: Must not exceed $10,000 USD in any currency. No currency symbol. Decimal separator must be a period (.), and the thousands separator must be a comma (,).
           object_of :Amount, BasicAmountType, :namespace => :ns, :required => true
+          # Address the order will be shipped to. Optional 
+          object_of :ShipToAddress, AddressType, :namespace => :ebl
+          # Information about the individual purchased items 
+          array_of :PaymentDetailsItem, PaymentDetailsItemType, :namespace => :ebl
+          # Sum of cost of all items in this order. You must set the currencyID attribute to one of the three-character currency codes for any of the supported PayPal currencies. Optional Limitations: Must not exceed $10,000 USD in any currency. No currency symbol. Decimal separator must be a period (.), and the thousands separator must be a comma (,). 
+          object_of :ItemTotal, BasicAmountType, :namespace => :ns
+          # Total shipping costs for this order. You must set the currencyID attribute to one of the three-character currency codes for any of the supported PayPal currencies. Optional Limitations: Must not exceed $10,000 USD in any currency. No currency symbol. Decimal separator must be a period (.), and the thousands separator must be a comma (,). 
+          object_of :ShippingTotal, BasicAmountType, :namespace => :ns
+          # Total handling costs for this order. You must set the currencyID attribute to one of the three-character currency codes for any of the supported PayPal currencies. Optional Limitations: Must not exceed $10,000 USD in any currency. No currency symbol. Decimal separator must be a period (.), and the thousands separator must be a comma (,). 
+          object_of :HandlingTotal, BasicAmountType, :namespace => :ns
+          # Sum of tax for all items in this order. You must set the currencyID attribute to one of the three-character currency codes for any of the supported PayPal currencies. Optional Limitations: Must not exceed $10,000 USD in any currency. No currency symbol. Decimal separator must be a period (.), and the thousands separator must be a comma (,). 
+          object_of :TaxTotal, BasicAmountType, :namespace => :ns
+          # Total shipping insurance costs for this order. Optional 
+          object_of :InsuranceTotal, BasicAmountType, :namespace => :ns
+          # Shipping discount for this order, specified as a negative number. Optional 
+          object_of :ShippingDiscount, BasicAmountType, :namespace => :ns
+          # Description of items the customer is purchasing. Optional Character length and limitations: 127 single-byte alphanumeric characters 
+          object_of :OrderDescription, String, :namespace => :ns
+          # A free-form field for your own use. Optional Character length and limitations: 256 single-byte alphanumeric characters 
+          object_of :Custom, String, :namespace => :ns
           # Unique id for each API request to prevent duplicate payments. Optional Character length and limits: 38 single-byte characters maximum. 
           object_of :MsgSubID, String, :namespace => :ns
+          # IP Address of the buyer 
+          object_of :IPAddress, String, :namespace => :ns
         end
       end
 
@@ -4558,6 +4643,39 @@ module PayPal::SDK
           object_of :AuthorizationInfo, AuthorizationInfoType, :namespace => :ebl
           # Return msgsubid back to merchant
           object_of :MsgSubID, String, :namespace => :ns
+        end
+      end
+
+
+
+      class UpdateAuthorizationReq < DataType
+        def self.load_members
+          object_of :UpdateAuthorizationRequest, UpdateAuthorizationRequestType, :namespace => :ns
+        end
+      end
+
+
+
+      # The value of the authorizationâtransaction identification number returned by a PayPal product. Required Character length and limits: 19 single-byte characters maximum 
+      class UpdateAuthorizationRequestType < AbstractRequestType
+        def self.load_members
+          # The value of the authorizationâtransaction identification number returned by a PayPal product. Required Character length and limits: 19 single-byte characters maximum 
+          object_of :TransactionID, String, :namespace => :ns, :required => true
+          # Shipping Address for this transaction. 
+          object_of :ShipToAddress, AddressType, :namespace => :ebl
+          # IP Address of the buyer 
+          object_of :IPAddress, String, :namespace => :ns
+        end
+      end
+
+
+
+      # An authorization identification number. Character length and limits: 19 single-byte characters 
+      class UpdateAuthorizationResponseType < AbstractResponseType
+        def self.load_members
+          # An authorization identification number. Character length and limits: 19 single-byte characters 
+          object_of :TransactionID, String, :namespace => :ns, :required => true
+          object_of :AuthorizationInfo, AuthorizationInfoType, :namespace => :ebl
         end
       end
 
