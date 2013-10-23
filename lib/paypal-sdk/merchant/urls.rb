@@ -10,9 +10,10 @@ module PayPal
           "#{REDIRECT_ENDPOINTS[api_mode]}?#{encode_www_form(params)}"
         end
 
-        def express_checkout_url(token)
+        def express_checkout_url(token, extra_params={})
           token = token.Token if token.respond_to?(:Token)
-          redirect_url( :cmd => "_express-checkout", :token => token.to_s )
+          params = {:cmd => "_express-checkout", :token => token.to_s}
+          redirect_url(params.merge!(extra_params))
         end
       end
     end
