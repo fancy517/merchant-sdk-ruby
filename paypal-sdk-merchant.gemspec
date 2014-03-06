@@ -19,5 +19,5 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  gem.add_dependency('paypal-sdk-core', '~> 0.2.3')
+  gem.add_dependency('paypal-sdk-core', '~> 0.2.7')
 end
