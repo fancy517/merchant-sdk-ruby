@@ -119,5 +119,12 @@ describe "Merchant" do
       @api.ipn_valid?("Invalid").should be_false
     end
 
+    it "Update BillAgreement" do
+      @response = @api.BillAgreementUpdate({ :ReferenceID => "testing" })
+      @response.should_not be_success
+      @response.errors[0].ShortMessage.should eql "Billing Agreement Id or transaction Id is not valid"
+    end
+
+
   end
 end
