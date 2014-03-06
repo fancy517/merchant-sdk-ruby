@@ -22,5 +22,5 @@ Gem::Specification.new do |s|
   s.add_dependency "simple_form"
   s.add_dependency "haml"
   s.add_dependency "coderay"
-  s.add_dependency "jquery-rails"
+  s.add_dependency "jquery-rails", "~> 2.3.0"
 end
