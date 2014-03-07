@@ -16,4 +16,7 @@ group :test do
   gem 'rspec'
 end
 
-gem 'nokogiri', '~> 1.5.9', :platform => :mri_18
+platform :mri_18 do
+  gem 'nokogiri', '~> 1.5.9'
+  gem 'rubyzip', '~> 0.9.9'
+end
