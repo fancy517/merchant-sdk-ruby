@@ -1,3 +1,7 @@
+Version 1.106.2 - March 7, 2014
+  - Fixed BillAgreementUpdate issue
+  - Updated core version to 0.2.7
+
 Version 1.106.1 - October 23, 2013
 
   - Allow express_checkout_url to accept extra parameters
@@ -5,19 +9,19 @@ Version 1.106.1 - October 23, 2013
 
 Version 1.106.0 - August 22, 2013
 
-	- Updated stubs for 106 release.
+  - Updated stubs for 106 release.
 
 You can see source code of this release in github under https://github.com/paypal/merchant-sdk-ruby/tree/v1.106.0.
 --------------------------------------------------------------------------------------------------
 Version 1.103.0 - June 06, 2013
 
-	- Updated stubs for 103 release.
+  - Updated stubs for 103 release.
 
 You can see source code of this release in github under https://github.com/paypal/merchant-sdk-ruby/tree/v1.103.0.
 --------------------------------------------------------------------------------------------------
 Version 1.102.0 - May 23, 2013
 
-	- Updated stubs for 102 release.
+  - Updated stubs for 102 release.
 
 You can see source code of this release in github under https://github.com/paypal/merchant-sdk-ruby/tree/v1.102.0.
 --------------------------------------------------------------------------------------------------
