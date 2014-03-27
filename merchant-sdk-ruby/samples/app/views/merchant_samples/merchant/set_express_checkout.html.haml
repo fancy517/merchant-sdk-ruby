@@ -1,0 +1,38 @@
+= api_form_for @set_express_checkout, :url => merchant_path(:set_express_checkout) do |f|
+  .row
+    = f.fields_for :SetExpressCheckoutRequestDetails do |det|
+      .span5
+        %legend Set express checkout
+        = det.fields_for :PaymentDetails do |pay|
+          = pay.input :PaymentAction
+          %legend Address
+          = pay.fields_for :ShipToAddress do |addr|
+            = render "address", :f => addr
+          %legend Shipping Total
+          = pay.input :ShippingMethod
+          = pay.fields_for :ShippingTotal do |amt|
+            = render "amount", :f => amt
+      .span5
+        = det.fields_for :PaymentDetails do |pay|
+          %legend Item
+          = pay.fields_for :PaymentDetailsItem do |item|
+            = item.input :Name
+            = item.fields_for :Amount do |amt|
+              = render "amount", :f => amt
+            = item.input :Quantity
+            = item.input :ItemCategory
+          %legend Tax Total
+          = pay.fields_for :TaxTotal do |amt|
+            = render "amount", :f => amt
+          %legend URLS
+          = pay.input :NotifyURL
+          = det.input :ReturnURL
+          = det.input :CancelURL
+
+  .form-actions
+    = f.submit "Submit", :class => "btn btn-primary", :data => { :disable_with => "Processing.." }
+
+- if @set_express_checkout_response
+  = render 'api_response', :request => @set_express_checkout, :response => @set_express_checkout_response
+  - if @set_express_checkout_response.success?
+    = link_to "Redirect to PayPal to login", @api.express_checkout_url(@set_express_checkout_response)

@@ -1,0 +1,16 @@
+= api_form_for @do_capture, :url => merchant_path(:do_capture) do |f|
+
+  .row
+    .span5
+      %legend Do capture request
+      = f.input :AuthorizationID
+      = f.fields_for :Amount do |amount|
+        = amount.input :currencyID
+        = amount.input :value
+      = f.input :CompleteType
+
+  .form-actions
+    = f.submit "Submit", :class => "btn btn-primary", :data => { :disable_with => "Processing.." }
+
+- if @do_capture_response
+  = render 'api_response', :request => @do_capture, :response => @do_capture_response

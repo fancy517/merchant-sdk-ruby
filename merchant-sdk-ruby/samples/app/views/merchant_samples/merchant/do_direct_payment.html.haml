@@ -1,0 +1,24 @@
+= api_form_for @do_direct_payment, :url => merchant_path(:do_direct_payment) do |f|
+  .row
+    = f.fields_for :DoDirectPaymentRequestDetails do |detail|
+      .span5
+        %legend Do direct payment request
+        = detail.input :PaymentAction
+        = detail.fields_for :CreditCard do |cc|
+          = render "credit_card", :f => cc
+        = detail.fields_for :PaymentDetails do |pay|
+          = pay.input :NotifyURL
+      .span5
+        %legend Payment Details
+        = detail.fields_for :PaymentDetails do |pay|
+          = pay.fields_for :ShipToAddress do |address|
+            = render "address", :f => address
+          = pay.fields_for :OrderTotal do |amt|
+            = render "amount", :f => amt
+
+
+  .form-actions
+    = f.submit "Submit", :class => "btn btn-primary", :data => { :disable_with => "Processing.." }
+
+- if @do_direct_payment_response
+  = render 'api_response', :request => @do_direct_payment, :response => @do_direct_payment_response

@@ -1,0 +1,11 @@
+= api_form_for @get_boarding_details, :url => merchant_path(:get_boarding_details) do |f|
+  .row
+    .span5
+      %legend Get boarding request
+      = f.input :Token
+
+  .form-actions
+    = f.submit "Submit", :class => "btn btn-primary", :data => { :disable_with => "Processing.." }
+
+- if @get_boarding_details_response
+  = render 'api_response', :request => @get_boarding_details, :response => @get_boarding_details_response

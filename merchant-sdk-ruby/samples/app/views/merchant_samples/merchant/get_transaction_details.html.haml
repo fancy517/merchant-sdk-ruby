@@ -1,0 +1,12 @@
+= api_form_for @get_transaction_details, :url => merchant_path(:get_transaction_details) do |f|
+
+  .row
+    .span5
+      %legend Get transaction details request
+      = f.input :TransactionID
+
+  .form-actions
+    = f.submit "Submit", :class => "btn btn-primary", :data => { :disable_with => "Processing.." }
+
+- if @get_transaction_details_response
+  = render 'api_response', :request => @get_transaction_details, :response => @get_transaction_details_response

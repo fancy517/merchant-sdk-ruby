@@ -1,7 +1,7 @@
 module PayPal
   module SDK
     module Merchant
-      VERSION = "1.106.2"
+      VERSION = "1.112.0"
     end
   end
 end

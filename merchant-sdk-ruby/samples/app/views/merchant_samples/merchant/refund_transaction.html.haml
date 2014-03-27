@@ -1,0 +1,19 @@
+= api_form_for @refund_transaction, :url => merchant_path(:refund_transaction) do |f|
+
+  .row
+    .span5
+      %legend Refund transaction request
+      = f.input :TransactionID
+      = f.input :RefundType
+      = f.input :RefundSource
+    .span5
+      %legend Amount
+      = f.fields_for :Amount do |amount|
+        = amount.input :currencyID
+        = amount.input :value
+
+  .form-actions
+    = f.submit "Submit", :class => "btn btn-primary", :data => { :disable_with => "Processing.." }
+
+- if @refund_transaction_response
+  = render 'api_response', :request => @refund_transaction, :response => @refund_transaction_response

@@ -1,0 +1,17 @@
+= api_form_for @mass_pay, :url => merchant_path(:mass_pay) do |f|
+  .row
+    .span5
+      %legend Mass pay request
+      = f.input :ReceiverType
+      = f.fields_for :MassPayItem do |item|
+        = item.input :ReceiverEmail
+        = item.input :ReceiverPhone
+        = item.input :ReceiverID
+        = item.fields_for :Amount do |amt|
+          = render "amount", :f => amt
+
+  .form-actions
+    = f.submit "Submit", :class => "btn btn-primary", :data => { :disable_with => "Processing.." }
+
+- if @mass_pay_response
+  = render 'api_response', :request => @mass_pay, :response => @mass_pay_response
