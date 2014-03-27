@@ -1,0 +1,19 @@
+= api_form_for @do_non_referenced_credit, :url => merchant_path(:do_non_referenced_credit) do |f|
+
+  = f.fields_for :DoNonReferencedCreditRequestDetails do |det|
+    .row
+      .span5
+        %legend Do non referenced credit request
+        = det.fields_for :CreditCard do |cc|
+          = render 'credit_card', :f => cc
+      .span5
+        %legend Net Amount
+        = det.fields_for :NetAmount do |amt|
+          = render 'amount', :f => amt
+        = det.input :Comment
+
+  .form-actions
+    = f.submit "Submit", :class => "btn btn-primary", :data => { :disable_with => "Processing.." }
+
+- if @do_non_referenced_credit_response
+  = render 'api_response', :request => @do_non_referenced_credit, :response => @do_non_referenced_credit_response

@@ -1,0 +1,14 @@
+= api_form_for @reverse_transaction, :url => merchant_path(:reverse_transaction) do |f|
+
+  .row
+    .span5
+      %legend Reverse transaction request
+      = f.fields_for :ReverseTransactionRequestDetails do |detail|
+        = detail.input :TransactionID
+
+  .form-actions
+    = f.submit "Submit", :class => "btn btn-primary", :data => { :disable_with => "Processing.." }
+
+- if @reverse_transaction_response
+  = render 'api_response', :request => @reverse_transaction, :response => @reverse_transaction_response
+

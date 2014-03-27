@@ -1,0 +1,31 @@
+= api_form_for @enter_boarding, :url => merchant_path(:enter_boarding) do |f|
+  = f.fields_for :EnterBoardingRequestDetails do |det|
+    .row
+      .span5
+        %legend Enter boarding request
+        = det.input :ProgramCode
+        = det.input :ProductList
+        %legend Business Info
+        = det.fields_for :BusinessInfo do |business|
+          = business.input :Name
+          = business.input :Type
+          = business.input :Category
+          = business.input :AverageMonthlyVolume
+          = business.input :AveragePrice
+          = business.input :RevenueFromOnlineSales
+        = det.input :MarketingCategory
+      .span5
+        %legend Owner Info
+        = det.fields_for :OwnerInfo do |owner_info|
+          = owner_info.fields_for :Owner do |owner|
+            = owner.fields_for :PayerName do |name|
+              = name.input :FirstName
+              = name.input :LastName
+          = owner_info.input :MobilePhone
+          = owner_info.input :SSN
+
+  .form-actions
+    = f.submit "Submit", :class => "btn btn-primary", :data => { :disable_with => "Processing.." }
+
+- if @enter_boarding_response
+  = render 'api_response', :request => @enter_boarding, :response => @enter_boarding_response

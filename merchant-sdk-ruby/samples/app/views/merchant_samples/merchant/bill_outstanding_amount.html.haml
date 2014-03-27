@@ -1,0 +1,14 @@
+= api_form_for @bill_outstanding_amount, :url => merchant_path(:bill_outstanding_amount) do |f|
+  .row
+    .span10
+      %legend Bill outstanding amount request
+      = f.fields_for :BillOutstandingAmountRequestDetails do |detail|
+        = detail.input :ProfileID
+        = detail.fields_for :Amount do |amt|
+          = render "amount", :f => amt
+
+  .form-actions
+    = f.submit "Submit", :class => "btn btn-primary", :data => { :disable_with => "Processing.." }
+
+- if @bill_outstanding_amount_response
+  = render 'api_response', :request => @bill_outstanding_amount, :response => @bill_outstanding_amount_response

@@ -1,0 +1,42 @@
+.well.well-mini
+  %ul.nav.nav-list.bs-docs-sidenav
+    %li.nav-header Settlements
+    = active_li "Refund",               merchant_path(:refund_transaction)
+    = active_li "Do authorization",     merchant_path(:do_authorization)
+    = active_li "Do void",              merchant_path(:do_void)
+    = active_li "Do reauthorization",   merchant_path(:do_reauthorization)
+    = active_li "Do capture",           merchant_path(:do_capture)
+    = active_li "Reverse transaction",  merchant_path(:reverse_transaction)
+    = active_li "Do non referenced credit",  merchant_path(:do_non_referenced_credit)
+    = active_li "Manage pending transaction status",  merchant_path(:manage_pending_transaction_status)
+    %li.nav-header Express Checkout
+    = active_li "Set express checkout", merchant_path(:set_express_checkout)
+    = active_li "Get express checkout", merchant_path(:get_express_checkout_details)
+    = active_li "Do express checkout", merchant_path(:do_express_checkout_payment)
+    %li.nav-header Reporting
+    = active_li "Transaction search", merchant_path(:transaction_search)
+    = active_li "Get transaction details", merchant_path(:get_transaction_details)
+    = active_li "Get balance", merchant_path(:get_balance)
+    = active_li "Get pal details", merchant_path(:get_pal_details)
+    = active_li "Address verify", merchant_path(:address_verify)
+    %li.nav-header Account Authentication
+    = active_li "Set auth flow param",  merchant_path(:set_auth_flow_param)
+    = active_li "Get auth details",     merchant_path(:get_auth_details)
+    %li.nav-header Recurring Payments
+    = active_li "Create recurring payments profile",  merchant_path(:create_recurring_payments_profile)
+    = active_li "Get recurring payments profile details",  merchant_path(:get_recurring_payments_profile_details)
+    = active_li "Manage recurring payments profile status",  merchant_path(:manage_recurring_payments_profile_status)
+    = active_li "Bill outstanding amount",  merchant_path(:bill_outstanding_amount)
+    %li.nav-header Reference Transactions and Billing Agreemen
+    = active_li "Get billing agreement customer details",  merchant_path(:get_billing_agreement_customer_details)
+    = active_li "Bill agreement update",  merchant_path(:bill_agreement_update)
+    = active_li "Do reference transaction",  merchant_path(:do_reference_transaction)
+    = active_li "Bill user",  merchant_path(:bill_user)
+    %li.nav-header DCC
+    = active_li "Do direct payment",  merchant_path(:do_direct_payment)
+    %li.nav-header MassPay
+    = active_li "Mass pay",  merchant_path(:mass_pay)
+    %li.nav-header Onboarding
+    = active_li "Enter boarding",  merchant_path(:enter_boarding)
+    = active_li "Get boarding details",  merchant_path(:get_boarding_details)
+

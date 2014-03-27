@@ -1,0 +1,38 @@
+= api_form_for @create_recurring_payments_profile, :url => merchant_path(:create_recurring_payments_profile) do |f|
+  .row
+    = f.fields_for :CreateRecurringPaymentsProfileRequestDetails do |detail|
+      .span5
+        %legend Create recurring payments profile request
+        = detail.input :Token
+        %legend Credit card
+        = detail.fields_for :CreditCard do |cc|
+          = render "credit_card", :f => cc
+        %legend RecurringPaymentsProfileDetails
+        = detail.fields_for :RecurringPaymentsProfileDetails do |profile|
+          = profile.input :SubscriberName
+          = profile.input :BillingStartDate
+          = profile.fields_for :SubscriberShippingAddress do |address|
+            = render 'address', :f => address
+      .span5
+        %legend ScheduleDetails
+        = detail.fields_for :ScheduleDetails do |sd|
+          = sd.input :Description
+          = sd.fields_for :ActivationDetails do |act|
+            = act.fields_for :InitialAmount do |amt|
+              = render "amount", :f => amt
+            = act.input :FailedInitialAmountAction
+          %legend Trial period
+          = sd.fields_for :TrialPeriod do |tp|
+            = render 'billing_period_details', :f => tp
+          %legend Payment period
+          = sd.fields_for :PaymentPeriod do |tp|
+            = render 'billing_period_details', :f => tp
+          = sd.input :MaxFailedPayments
+          = sd.input :AutoBillOutstandingAmount
+
+
+  .form-actions
+    = f.submit "Submit", :class => "btn btn-primary", :data => { :disable_with => "Processing.." }
+
+- if @create_recurring_payments_profile_response
+  = render 'api_response', :request => @create_recurring_payments_profile, :response => @create_recurring_payments_profile_response

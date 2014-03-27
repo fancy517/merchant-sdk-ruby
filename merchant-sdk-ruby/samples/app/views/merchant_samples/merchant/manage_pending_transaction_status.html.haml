@@ -1,0 +1,13 @@
+= api_form_for @manage_pending_transaction_status, :url => merchant_path(:manage_pending_transaction_status) do |f|
+
+  .row
+    .span5
+      %legend Manage pending transaction status request
+      = f.input :TransactionID
+      = f.input :Action
+
+  .form-actions
+    = f.submit "Submit", :class => "btn btn-primary", :data => { :disable_with => "Processing.." }
+
+- if @manage_pending_transaction_status_response
+  = render 'api_response', :request => @manage_pending_transaction_status, :response => @manage_pending_transaction_status_response

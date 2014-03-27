@@ -1,0 +1,13 @@
+= api_form_for @address_verify, :url => merchant_path(:address_verify) do |f|
+  .row
+    .span5
+      %legend Address verify request
+      = f.input :Email
+      = f.input :Street
+      = f.input :Zip
+
+  .form-actions
+    = f.submit "Submit", :class => "btn btn-primary", :data => { :disable_with => "Processing.." }
+
+- if @address_verify_response
+  = render 'api_response', :request => @address_verify, :response => @address_verify_response

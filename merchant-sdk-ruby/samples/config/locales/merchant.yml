@@ -1,0 +1,120 @@
+en:
+  merchant:
+    do_express_checkout_payment:
+      DoExpressCheckoutPaymentRequestDetails:
+        Token: EC-8UT96070TG172711X
+        PayerID: TWLK53YN7GDM6
+        PaymentAction: Sale
+        PaymentDetails:
+          OrderTotal:
+            currencyID: USD
+            value: 2.0
+    set_express_checkout:
+      SetExpressCheckoutRequestDetails:
+        PaymentDetails:
+          PaymentAction: Sale
+          TaxTotal:
+            currencyID: USD
+            value: 0
+          ShippingMethod: UPSGround
+          ShippingTotal:
+            currencyID: USD
+            value: 3.0
+          PaymentDetailsItem:
+            Name: Item Name
+            Amount:
+              currencyID: USD
+              value: 5.27
+            Quantity: 1
+            ItemCategory: Physical
+          ShipToAddress:
+            Name: John Doe
+            Street1: "1 Main St"
+            CityName: San Jose
+            StateOrProvince: CA
+            Country: US
+            PostalCode: "95131"
+    refund_transaction:
+      TransactionID:
+      Amount:
+        currencyID: USD
+        value: 1
+    do_direct_payment:
+      DoDirectPaymentRequestDetails:
+        PaymentAction: Sale
+        CreditCard:
+          CreditCardType: Visa
+          CreditCardNumber: 4904202183894535
+          ExpMonth: "12"
+          ExpYear: "2022"
+          CVV2: 962
+        PaymentDetails:
+          ShipToAddress:
+            Name: John Doe
+            Street1: "1 Main St"
+            CityName: San Jose
+            StateOrProvince: CA
+            Country: US
+            PostalCode: "95131"
+          OrderTotal:
+            currencyID: USD
+            value: 1
+    create_recurring_payments_profile:
+      CreateRecurringPaymentsProfileRequestDetails:
+        CreditCard:
+          CreditCardType: Visa
+          CreditCardNumber: 4904202183894535
+          ExpMonth: "12"
+          ExpYear: "2022"
+          CVV2: 962
+        RecurringPaymentsProfileDetails:
+          BillingStartDate: "2022-10-12"
+          SubscriberShippingAddress:
+            Name: John Doe
+            Street1: "1 Main St"
+            CityName: San Jose
+            StateOrProvince: CA
+            Country: US
+            PostalCode: "95131"
+        ScheduleDetails:
+          Description: Welcome to the world of shopping where you get everything
+          ActivationDetails:
+            FailedInitialAmountAction: ContinueOnFailure
+            InitialAmount:
+              currencyID:
+              value:
+          TrialPeriod:
+            BillingPeriod: Day
+            BillingFrequency: 10
+            TotalBillingCycles: 2
+            Amount:
+              currencyID:
+              value:
+          PaymentPeriod:
+            BillingPeriod: Day
+            BillingFrequency: 10
+            TotalBillingCycles: 8
+            Amount:
+              currencyID: USD
+              value: 5
+          MaxFailedPayments: 3
+          AutoBillOutstandingAmount: NoAutoBill
+
+    manage_recurring_payments_profile_status:
+      ManageRecurringPaymentsProfileStatusRequestDetails:
+        Action: Cancel
+    set_auth_flow_param:
+      SetAuthFlowParamRequestDetails:
+        ReturnURL: http://www.example.com/
+        CancelURL: http://www.example.com/
+        LogoutURL: http://www.example.com/
+    mass_pay:
+      ReceiverType: EmailAddress
+      MassPayItem:
+      - ReceiverEmail: enduser_biz@gmail.com
+        Amount:
+          currencyID: USD
+          value: "3.00"
+
+
+
