@@ -1,0 +1,16 @@
+= api_form_for @transaction_search, :url => merchant_path(:transaction_search) do |f|
+
+  .row
+    .span5
+      %legend transaction search request
+      = f.input :StartDate
+      = f.input :EndDate
+      = f.input :TransactionID
+      = f.input :Status
+      = f.input :TransactionClass
+
+  .form-actions
+    = f.submit "Submit", :class => "btn btn-primary", :data => { :disable_with => "Processing.." }
+
+- if @transaction_search_response
+  = render 'api_response', :request => @transaction_search, :response => @transaction_search_response

@@ -1,0 +1,12 @@
+= api_form_for @do_void, :url => merchant_path(:do_void) do |f|
+
+  .row
+    .span5
+      %legend Do void request
+      = f.input :AuthorizationID
+
+  .form-actions
+    = f.submit "Submit", :class => "btn btn-primary", :data => { :disable_with => "Processing.." }
+
+- if @do_void_response
+  = render 'api_response', :request => @do_void, :response => @do_void_response

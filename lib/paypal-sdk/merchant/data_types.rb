@@ -606,7 +606,7 @@ module PayPal::SDK
 
       #  Category of payment like international shipping 
       class PaymentCategoryType < EnumType
-        self.options = { 'INTERNATIONALSHIPPING' => 'InternationalShipping' }
+        self.options = { 'INTERNATIONALSHIPPING' => 'InternationalShipping', 'LOCALDELIVERY' => 'LocalDelivery' }
       end
 
 
@@ -1063,6 +1063,8 @@ module PayPal::SDK
         def self.load_members
           # Information that is used to indentify the Buyer. This is used for auto authorization. Mandatory if Authorization is requested.
           object_of :IdentificationInfo, IdentificationInfoType, :namespace => :ebl
+          # Correlation id related to risk process done for the device. Max length is 36 Chars.
+          object_of :RiskSessionCorrelationID, String, :namespace => :ebl
         end
       end
 
@@ -1243,6 +1245,10 @@ module PayPal::SDK
           array_of :PaymentDetails, PaymentDetailsType, :namespace => :ebl
           # Flag to indicate if previously set promoCode shall be overriden. Value 1 indicates overriding.  
           object_of :PromoOverrideFlag, String, :namespace => :ebl
+          # Optional merchant specified flag which indicates whether to use the payment details information provided in SetExpressCheckoutDetails or in DoExpressCheckoutPayment.
+          # Possible values are true, false, 1, 0. If this is set to true or 1, the payment details information would be used from what was passed in SetExpressCheckoutDetails.
+          # Any change in the paymentdetails passed in DoExpressCheckoutPayment will be ignored if this field is set to true.
+          object_of :UseSessionPaymentDetails, String, :namespace => :ebl
           # Promotional financing code for item. Overrides any previous PromoCode setting. 
           object_of :PromoCode, String, :namespace => :ebl
           # Contains data for enhanced data like Airline Itinerary Data. 
@@ -1269,6 +1275,8 @@ module PayPal::SDK
           object_of :ButtonSource, String, :namespace => :ebl
           # Merchant specified flag which indicates whether to create billing agreement as part of DoEC or not. Optional 
           object_of :SkipBACreation, Boolean, :namespace => :ebl
+          # Merchant specified flag which indicates to use payment details from session if available. Optional 
+          object_of :UseSessionPaymentDetails, String, :namespace => :ebl
           # Optional element that defines relationship between buckets 
           array_of :CoupledBuckets, CoupledBucketsType, :namespace => :ebl
         end
@@ -1307,6 +1315,8 @@ module PayPal::SDK
           object_of :PaymentInfo, PaymentInfoType, :namespace => :ebl
           # Return msgsubid back to merchant 
           object_of :MsgSubID, String, :namespace => :ebl
+          # Partner funding source id corresponding to the FS used in authorization. 
+          object_of :PartnerFundingSourceID, String, :namespace => :ebl
         end
       end
 
@@ -1702,8 +1712,10 @@ module PayPal::SDK
       # InstrumentDetailsType Promotional Instrument Information. 
       class InstrumentDetailsType < DataType
         def self.load_members
-          # This field holds the category of the instrument only when it is promotional. Return value 1 represents BML. 
+          # This field holds the category of the instrument only when it is promotional. Return value 1 represents BML, 2 reprasents PLCC/Cobranded. 
           object_of :InstrumentCategory, String, :namespace => :ebl
+          # This field holds the InstrumentID issued by external party corresponding to the funding source used in payment. 
+          object_of :InstrumentID, String, :namespace => :ebl
         end
       end
 

@@ -1,0 +1,15 @@
+= api_form_for @do_authorization, :url => merchant_path(:do_authorization) do |f|
+
+  .row
+    .span5
+      %legend Do authorization request
+      = f.input :TransactionID
+      = f.fields_for :Amount do |amount|
+        = amount.input :currencyID
+        = amount.input :value
+
+  .form-actions
+    = f.submit "Submit", :class => "btn btn-primary", :data => { :disable_with => "Processing.." }
+
+- if @do_authorization_response
+  = render 'api_response', :request => @do_authorization, :response => @do_authorization_response

@@ -1,0 +1,5 @@
+= f.input :BillingPeriod
+= f.input :BillingFrequency
+= f.input :TotalBillingCycles
+= f.fields_for :Amount do |amt|
+  = render "amount", :f => amt

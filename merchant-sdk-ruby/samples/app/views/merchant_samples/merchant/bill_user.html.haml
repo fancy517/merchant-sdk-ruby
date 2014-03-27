@@ -1,0 +1,19 @@
+= api_form_for @bill_user, :url => merchant_path(:bill_user) do |f|
+  .row
+    .span5
+      %legend Bill user request
+      = f.fields_for :MerchantPullPaymentDetails do |mer|
+        = mer.input :MpID
+        = mer.input :PaymentType
+        = mer.input :ItemName
+        = mer.input :ItemNumber
+        = mer.fields_for :Amount do |amt|
+          = render "amount", :f => amt
+        = mer.input :EmailSubject
+        = mer.input :Memo
+
+  .form-actions
+    = f.submit "Submit", :class => "btn btn-primary", :data => { :disable_with => "Processing.." }
+
+- if @bill_user_response
+  = render 'api_response', :request => @bill_user, :response => @bill_user_response

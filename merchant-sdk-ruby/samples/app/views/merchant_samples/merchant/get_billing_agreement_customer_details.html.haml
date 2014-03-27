@@ -1,0 +1,11 @@
+= api_form_for @get_billing_agreement_customer_details, :url => merchant_path(:get_billing_agreement_customer_details) do |f|
+  .row
+    .span10
+      %legend Get billing agreement customer details request
+      = f.input :Token
+
+  .form-actions
+    = f.submit "Submit", :class => "btn btn-primary", :data => { :disable_with => "Processing.." }
+
+- if @get_billing_agreement_customer_details_response
+  = render 'api_response', :request => @get_billing_agreement_customer_details, :response => @get_billing_agreement_customer_details_response
