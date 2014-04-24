@@ -611,6 +611,12 @@ module PayPal::SDK
 
 
 
+      class WalletItemType < EnumType
+        self.options = { 'MERCHANTCOUPON' => 'MERCHANT_COUPON', 'LOYALTYCARD' => 'LOYALTY_CARD', 'MANUFACTURERCOUPON' => 'MANUFACTURER_COUPON' }
+      end
+
+
+
       # Value of the application-specific error parameter.  
       class ErrorParameterType < DataType
         def self.load_members
@@ -1241,14 +1247,12 @@ module PayPal::SDK
           object_of :PayerID, String, :namespace => :ebl
           # URL on Merchant site pertaining to this invoice. Optional 
           object_of :OrderURL, String, :namespace => :ebl
+          # Unique id for each API request to prevent duplicate payments on merchant side. Passed directly back to merchant in response. Optional Character length and limits: 38 single-byte characters maximum. 
+          object_of :MsgSubID, String, :namespace => :ebl
           # Information about the payment Required 
           array_of :PaymentDetails, PaymentDetailsType, :namespace => :ebl
           # Flag to indicate if previously set promoCode shall be overriden. Value 1 indicates overriding.  
           object_of :PromoOverrideFlag, String, :namespace => :ebl
-          # Optional merchant specified flag which indicates whether to use the payment details information provided in SetExpressCheckoutDetails or in DoExpressCheckoutPayment.
-          # Possible values are true, false, 1, 0. If this is set to true or 1, the payment details information would be used from what was passed in SetExpressCheckoutDetails.
-          # Any change in the paymentdetails passed in DoExpressCheckoutPayment will be ignored if this field is set to true.
-          object_of :UseSessionPaymentDetails, String, :namespace => :ebl
           # Promotional financing code for item. Overrides any previous PromoCode setting. 
           object_of :PromoCode, String, :namespace => :ebl
           # Contains data for enhanced data like Airline Itinerary Data. 
@@ -1295,6 +1299,8 @@ module PayPal::SDK
           object_of :RedirectRequired, String, :namespace => :ebl
           # Memo entered by sender in PayPal Review Page note field. Optional Character length and limitations: 255 single-byte alphanumeric characters 
           object_of :Note, String, :namespace => :ebl
+          # Unique id passed in the DoEC call. 
+          object_of :MsgSubID, String, :namespace => :ebl
           # Redirect back to PayPal, PayPal can host the success page. 
           object_of :SuccessPageRedirectRequested, String, :namespace => :ebl
           # Information about the user selected options. 
@@ -1700,6 +1706,8 @@ module PayPal::SDK
           object_of :Address, AddressType, :namespace => :ebl
           # Business contact telephone number
           object_of :ContactPhone, String, :namespace => :ebl
+          # Items such as merchant coupons, loyalty cards, and manufacturer coupons in the PayPal wallet.
+          array_of :WalletItems, WalletItemsType, :namespace => :ebl
           # Details about payer's tax info. Refer to the TaxIdDetailsType for more details. 
           object_of :TaxIdDetails, TaxIdDetailsType, :namespace => :ebl
           # Holds any enhanced information about the payer
@@ -2090,6 +2098,10 @@ module PayPal::SDK
           object_of :Recurring, RecurringFlagType, :namespace => :ebl
           # Indicates the purpose of this payment like Refund 
           object_of :PaymentReason, PaymentReasonType, :namespace => :ebl
+          # For instance single use coupons should not be returned in future CheckIn calls once they are redeemed. 
+          array_of :RedeemedOffers, DiscountInfoType, :namespace => :ebl
+          # Total loyalty points for a given id accumulated by the consumre so far. 
+          array_of :CummulativePoints, DiscountInfoType, :namespace => :ebl
         end
       end
 
@@ -3284,6 +3296,40 @@ module PayPal::SDK
       class MerchantDataType < DataType
         def self.load_members
           array_of :MerchantDataTuple, TupleType, :namespace => :ebl
+        end
+      end
+
+
+
+      # Details about an Item stored in the PayPal Wallet. 
+      class WalletItemsType < DataType
+        def self.load_members
+          # (Optional)Identifies a wallet item of a given type. The format varies depending on the type. 
+          object_of :Type, WalletItemType, :namespace => :ebl
+          # (Optional)Uniquely identifies a wallet item of given type. Format varies depending on the type. Character length and limitations: 64 single-byte characters maximum. 
+          object_of :Id, String, :namespace => :ebl
+          # (Optional)Description of wallet item. Character length and limitations: 512 single-byte characters maximum. 
+          object_of :Description, String, :namespace => :ebl
+        end
+      end
+
+
+
+      # Describes discount information. 
+      class DiscountInfoType < DataType
+        def self.load_members
+          # (Optional)Item name. Character length and limits: 127 single-byte characters 
+          object_of :Name, String, :namespace => :ebl
+          # (Optional)Description of the discount. Character length and limits: 127 single-byte characters 
+          object_of :Description, String, :namespace => :ebl
+          # (Optional)Amount discounted. The value includes an amount and a 3-character currency code. 
+          object_of :Amount, BasicAmountType, :namespace => :ebl
+          # (Optional)Offer type. 
+          object_of :RedeemedOfferType, RedeemedOfferType, :namespace => :ebl
+          # (Optional)Offer ID. Character length and limits: 64 single-byte characters. 
+          object_of :RedeemedOfferId, String, :namespace => :ebl
+          # (Optional)Loyalty points accrued. 
+          object_of :PointsAccrued, Float, :namespace => :ebl
         end
       end
 
