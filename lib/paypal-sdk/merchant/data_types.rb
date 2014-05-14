@@ -1283,6 +1283,10 @@ module PayPal::SDK
           object_of :UseSessionPaymentDetails, String, :namespace => :ebl
           # Optional element that defines relationship between buckets 
           array_of :CoupledBuckets, CoupledBucketsType, :namespace => :ebl
+          # Optional element for the passing client id 
+          object_of :ClientID, String, :namespace => :ebl
+          # Optional element for the passing product lines 
+          object_of :ProductLine, String, :namespace => :ebl
         end
       end
 
