@@ -606,7 +606,14 @@ module PayPal::SDK
 
       #  Category of payment like international shipping 
       class PaymentCategoryType < EnumType
-        self.options = { 'INTERNATIONALSHIPPING' => 'InternationalShipping', 'LOCALDELIVERY' => 'LocalDelivery' }
+        self.options = { 'INTERNATIONALSHIPPING' => 'InternationalShipping', 'LOCALDELIVERY' => 'LocalDelivery', 'BOPIS' => 'BOPIS', 'PUDO' => 'PUDO' }
+      end
+
+
+
+      #  Location Type 
+      class LocationType < EnumType
+        self.options = { 'CONSUMER' => 'Consumer', 'STORE' => 'Store', 'PICKUPDROPOFF' => 'PickupDropoff' }
       end
 
 
@@ -1346,6 +1353,10 @@ module PayPal::SDK
           # Your customer session identification token. PayPal records this optional session identification token as an additional means to detect possible fraud. Optional Character length and limitations: 64 single-byte numeric characters
           object_of :MerchantSessionId, String, :namespace => :ebl
           object_of :ReturnFMFDetails, Boolean, :namespace => :ebl
+          # Use this optional parameter to pass in your business name and other data describing the transaction. Optional This information is usually displayed in the account holder's statement. Example: RedCross Haiti, RedCross Uganda, Realtor.com dues, Realtor.com list fee Length 25 characters. Alphanumeric characters and dash(-), dot(.), asterisk(*), space( ) On the customer's statement, an asterisk is used to separate the DBA name and product name. The asterisk delimiter can appear in position 4, 8, or 13. 
+          object_of :SoftDescriptor, String, :namespace => :ebl
+          # Use this optional parameter to pass information about how consumer should contact the merchant. Optional This information is usually displayed in the account holder's statement. For Ecom trx: phone, email or URL is allowed For Retail trx: only the actual city is allowed For details on allowed characters in Soft Descriptor City refer to the API documentation. 
+          object_of :SoftDescriptorCity, String, :namespace => :ebl
         end
       end
 
@@ -1834,6 +1845,10 @@ module PayPal::SDK
           object_of :OfferDetails, OfferDetailsType, :namespace => :ebl
           # This field indicates whether the credit card number used for this transaction is in a particular bin range registered with PayPal by the merchant. This filed is optional and will be present if merchant has a registered bin range. The value of this field will be "true" if merchant has a registered bin range and the credit card used in the transaction is within the registered bin range. The value of this field will be false if merchant has a registered bin range and credit card used in the transaction outside registered bin range or the transaction is not done using a credit card. 
           object_of :BinEligibility, String, :namespace => :ebl
+          # This information holds business name and other data describing the transaction. This information is usually displayed in the CC account holder's statement. 
+          object_of :SoftDescriptor, String, :namespace => :ebl
+          # CC Information about how consumer should contact the merchant. This information is usually displayed in the CC account holder's statement. 
+          object_of :SoftDescriptorCity, String, :namespace => :ebl
         end
       end
 
@@ -2065,6 +2080,7 @@ module PayPal::SDK
           object_of :FulfillmentReferenceNumber, String, :namespace => :ebl
           object_of :FulfillmentAddress, AddressType, :namespace => :ebl
           object_of :PaymentCategoryType, PaymentCategoryType, :namespace => :ebl
+          object_of :LocationType, LocationType, :namespace => :ebl
           object_of :ShippingMethod, ShippingServiceCodeType, :namespace => :ebl
           # Date and time (in GMT in the format yyyy-MM-ddTHH:mm:ssZ) at which address was changed by the user. 
           object_of :ProfileAddressChangeDate, DateTime, :namespace => :ebl
@@ -2102,6 +2118,8 @@ module PayPal::SDK
           object_of :Recurring, RecurringFlagType, :namespace => :ebl
           # Indicates the purpose of this payment like Refund 
           object_of :PaymentReason, PaymentReasonType, :namespace => :ebl
+          # Location ID Specified by merchant Optional Character length and limitations: 50 single-byte alphanumeric characters 
+          object_of :LocationID, String, :namespace => :ebl
           # For instance single use coupons should not be returned in future CheckIn calls once they are redeemed. 
           array_of :RedeemedOffers, DiscountInfoType, :namespace => :ebl
           # Total loyalty points for a given id accumulated by the consumre so far. 
@@ -2748,6 +2766,10 @@ module PayPal::SDK
           object_of :ScheduleDetails, ScheduleDetailsType, :namespace => :ebl, :required => true
           # Information about the Item Details. 
           array_of :PaymentDetailsItem, PaymentDetailsItemType, :namespace => :ebl
+          # Use this optional parameter to pass in your business name and other data describing the transaction. Optional This information is usually displayed in the CC account holder's statement. Example: RedCross Haiti, RedCross Uganda, Realtor.com dues, Realtor.com list fee Length 25 characters. Alphanumeric characters and dash(-), dot(.), asterisk(*), space( ) On the customer's statement, an asterisk is used to separate the DBA name and product name. The asterisk delimiter can appear in position 4, 8, or 13. 
+          object_of :SoftDescriptor, String, :namespace => :ebl
+          # Use this optional parameter to pass information about how consumer should contact the merchant. Optional This information is usually displayed in the CC account holder's statement. For Ecom trx: phone, email or URL is allowed For Retail trx: only the actual city is allowed For details on allowed characters in Soft Descriptor City refer to the API documentation. 
+          object_of :SoftDescriptorCity, String, :namespace => :ebl
         end
       end
 
@@ -2791,6 +2813,10 @@ module PayPal::SDK
           object_of :AggregateAmount, BasicAmountType, :namespace => :ebl
           object_of :AggregateOptionalAmount, BasicAmountType, :namespace => :ebl
           object_of :FinalPaymentDueDate, DateTime, :namespace => :ebl
+          # Use this optional parameter to pass in your business name and other data describing the transaction. Optional This information is usually displayed in the account holder's statement. Example: RedCross Haiti, RedCross Uganda, Realtor.com dues, Realtor.com list fee Length 25 characters. Alphanumeric characters and dash(-), dot(.), asterisk(*), space( ) On the customer's statement, an asterisk is used to separate the DBA name and product name. The asterisk delimiter can appear in position 4, 8, or 13. 
+          object_of :SoftDescriptor, String, :namespace => :ebl
+          # Use this optional parameter to pass information about how consumer should contact the merchant. Optional This information is usually displayed in the account holder's statement. For Ecom trx: phone, email or URL is allowed For Retail trx: only the actual city is allowed For details on allowed characters in Soft Descriptor City refer to the API documentation. 
+          object_of :SoftDescriptorCity, String, :namespace => :ebl
         end
       end
 
