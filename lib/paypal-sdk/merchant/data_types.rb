@@ -578,7 +578,7 @@ module PayPal::SDK
 
       #  UserSelectedFundingSourceType User Selected Funding Source (used by Express Checkout) 
       class UserSelectedFundingSourceType < EnumType
-        self.options = { 'ELV' => 'ELV', 'CREDITCARD' => 'CreditCard', 'CHINAUNIONPAY' => 'ChinaUnionPay', 'BML' => 'BML' }
+        self.options = { 'ELV' => 'ELV', 'CREDITCARD' => 'CreditCard', 'CHINAUNIONPAY' => 'ChinaUnionPay', 'BML' => 'BML', 'FINANCE' => 'Finance' }
       end
 
 
@@ -1132,7 +1132,7 @@ module PayPal::SDK
         def self.load_members
           # Allowable values: 0,1 The value 1 indicates that the customer can accept push funding, and 0 means they cannot. Optional Character length and limitations: One single-byte numeric character. 
           object_of :AllowPushFunding, String, :namespace => :ebl
-          # Allowable values: ELV, CreditCard, ChinaUnionPay, BML This element could be used to specify the perered funding option for a guest users. It has effect only if LandingPage element is set to Billing. Otherwise it will be ignored. 
+          # Allowable values: ELV, CreditCard, ChinaUnionPay, BML, Finance This element could be used to specify the preferred funding option for a guest users. It has effect only if LandingPage element is set to Billing. Otherwise it will be ignored. 
           object_of :UserSelectedFundingSource, UserSelectedFundingSourceType, :namespace => :ebl
         end
       end
@@ -1201,6 +1201,10 @@ module PayPal::SDK
           object_of :ExternalRememberMeStatusDetails, ExternalRememberMeStatusDetailsType, :namespace => :ebl
           # Response information resulting from opt-in operation or current login bypass status. 
           object_of :RefreshTokenStatusDetails, RefreshTokenStatusDetailsType, :namespace => :ebl
+          # Information about the transaction 
+          array_of :PaymentInfo, PaymentInfoType, :namespace => :ebl
+          # Indicate the tolerance a cart can be changed. Possible values are NONE = cart cannot be changed (since financing was used and country is DE). FLEXIBLE = cart can be changed If this parameter does not exist, then assume cart can be modified. 
+          object_of :CartChangeTolerance, String, :namespace => :ebl
         end
       end
 
@@ -1791,6 +1795,15 @@ module PayPal::SDK
           object_of :GrossAmount, BasicAmountType, :namespace => :ebl
           # Transaction fee associated with the payment 
           object_of :FeeAmount, BasicAmountType, :namespace => :ebl
+          # Transaction financing fee associated with the payment. 
+          object_of :FinancingFeeAmount, BasicAmountType, :namespace => :ebl
+          # Total overall cost associated with this financing transaction. 
+          object_of :FinancingTotalCost, BasicAmountType, :namespace => :ebl
+          # Monthly payment for this financing transaction. 
+          object_of :FinancingMonthlyPayment, BasicAmountType, :namespace => :ebl
+          # The length of this financing term, in months. 
+          object_of :FinancingTerm, String, :namespace => :ebl
+          object_of :IsFinancing, String, :namespace => :ebl
           # Amount deposited into the account's primary balance after a currency conversion from automatic conversion through your Payment Receiving Preferences or manual conversion through manually accepting a payment. This amount is calculated after fees and taxes have been assessed. 
           object_of :SettleAmount, BasicAmountType, :namespace => :ebl
           # Amount of tax for transaction 
@@ -4716,6 +4729,8 @@ module PayPal::SDK
           object_of :MsgSubID, String, :namespace => :ns
           # IP Address of the buyer 
           object_of :IPAddress, String, :namespace => :ns
+          # A flag indicating that this transaction is a Ship to Store transaction. Optional 
+          object_of :ShipToStore, String, :namespace => :ns
         end
       end
 
@@ -4727,7 +4742,7 @@ module PayPal::SDK
           # An authorization identification number. Character length and limits: 19 single-byte characters
           object_of :TransactionID, String, :namespace => :ns, :required => true
           # The amount and currency you specified in the request. 
-          object_of :Amount, BasicAmountType, :namespace => :ns, :required => true
+          object_of :Amount, BasicAmountType, :namespace => :ns
           object_of :AuthorizationInfo, AuthorizationInfoType, :namespace => :ebl
           # Return msgsubid back to merchant
           object_of :MsgSubID, String, :namespace => :ns
@@ -4753,6 +4768,8 @@ module PayPal::SDK
           object_of :ShipToAddress, AddressType, :namespace => :ebl
           # IP Address of the buyer 
           object_of :IPAddress, String, :namespace => :ns
+          # A flag indicating that this transaction is a Ship to Store transaction. Optional 
+          object_of :ShipToStore, String, :namespace => :ns
         end
       end
 
