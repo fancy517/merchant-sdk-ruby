@@ -1,10 +1,10 @@
 Install gem:
 
     gem install gem/paypal-sdk-core-0.3.0.gem
-    gem install gem/paypal-sdk-merchant-1.116.0.gem
+    gem install gem/paypal-sdk-merchant-1.117.0.gem
 	
     #To try samples
-    gem install gem/sampleserviceName-1.116.0.gem
+    gem install gem/sampleserviceName-1.117.0.gem
 	
 Add library to you project `Gemfile`:
 
