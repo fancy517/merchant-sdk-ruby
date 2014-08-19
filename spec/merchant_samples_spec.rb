@@ -116,7 +116,7 @@ describe "Merchant" do
     end
 
     it "Validate ipn message" do
-      @api.ipn_valid?("Invalid").should be_false
+      expect(@api.ipn_valid?("Invalid")).to be_falsey
     end
 
     it "Update BillAgreement" do
