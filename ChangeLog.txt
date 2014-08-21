@@ -1,7 +1,6 @@
-Version 1.117.0 - August 19, 2014
+Version 1.117.0 - August 21, 2014
 
 	- Updated stubs for 117 release.
-	- Fixed a test case error.
 	
 You can see source code of this release in github under https://github.com/paypal/merchant-sdk-ruby/tree/v1.117.0.
 --------------------------------------------------------------------------------------------------

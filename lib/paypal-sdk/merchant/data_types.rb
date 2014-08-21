@@ -1008,6 +1008,8 @@ module PayPal::SDK
           array_of :PaymentDetails, PaymentDetailsType, :namespace => :ebl
           # An optional set of values related to tracking for external partner. 
           object_of :ExternalPartnerTrackingDetails, ExternalPartnerTrackingDetailsType, :namespace => :ebl
+          # URI(uniform resource identifier), the source from which the request is initiated. 
+          object_of :URI, String, :namespace => :ebl
         end
       end
 
@@ -1205,6 +1207,8 @@ module PayPal::SDK
           array_of :PaymentInfo, PaymentInfoType, :namespace => :ebl
           # Indicate the tolerance a cart can be changed. Possible values are NONE = cart cannot be changed (since financing was used and country is DE). FLEXIBLE = cart can be changed If this parameter does not exist, then assume cart can be modified. 
           object_of :CartChangeTolerance, String, :namespace => :ebl
+          # Type of the payment instrument. 
+          object_of :InstrumentDetails, InstrumentDetailsType, :namespace => :ebl
         end
       end
 
@@ -2137,6 +2141,8 @@ module PayPal::SDK
           array_of :RedeemedOffers, DiscountInfoType, :namespace => :ebl
           # Total loyalty points for a given id accumulated by the consumre so far. 
           array_of :CummulativePoints, DiscountInfoType, :namespace => :ebl
+          # Merchant Data that is passed through from Merchant to Processor 
+          array_of :MerchantData, MerchantDataType, :namespace => :ebl
         end
       end
 
@@ -2411,6 +2417,7 @@ module PayPal::SDK
           object_of :MerchantSessionId, String, :namespace => :ebl
           object_of :ReqConfirmShipping, String, :namespace => :ebl
           object_of :SoftDescriptor, String, :namespace => :ebl
+          object_of :SoftDescriptorCity, String, :namespace => :ebl
           object_of :SenderDetails, SenderDetailsType, :namespace => :ebl
           # Unique id for each API request to prevent duplicate payments. Optional Character length and limits: 38 single-byte characters maximum. 
           object_of :MsgSubID, String, :namespace => :ebl
