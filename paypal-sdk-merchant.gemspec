@@ -7,7 +7,7 @@ Gem::Specification.new do |gem|
   gem.name          = "paypal-sdk-merchant"
   gem.version       = PayPal::SDK::Merchant::VERSION
   gem.authors       = ["PayPal"]
-  gem.email         = ["DL-PP-Platform-Ruby-SDK@ebay.com"]
+  gem.email         = ["DL-PP-Platform-Ruby-SDK@paypal.com"]
   gem.summary       = %q{PayPal Merchant SDK}
   gem.description   = %q{The PayPal Merchant SDK provides Ruby APIs for processing payments, recurring payments, subscriptions and transactions using PayPal's Merchant APIs, which include Express Checkout, Recurring Payments, Direct Payment and Transactional APIs.}
   gem.homepage      = "https://developer.paypal.com"
