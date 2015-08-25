@@ -26,6 +26,8 @@ $ gem install paypal-sdk-merchant
 
 ## Configuration
 
+**Please note Rails 4+ is not supported due to [backward compatibility concern](https://github.com/paypal/merchant-sdk-ruby/pull/16#issuecomment-54171388).**
+
 For Rails application:
 
 ```sh
