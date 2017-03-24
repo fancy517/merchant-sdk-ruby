@@ -102,8 +102,6 @@ else
 end
 ```
 
-For more samples [paypal-sdk-samples.herokuapp.com/merchant/](https://paypal-sdk-samples.herokuapp.com/merchant/)
-
 ## Samples
 
 Add following line in rails `Gemfile`:
