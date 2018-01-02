@@ -17,6 +17,6 @@ group :test do
 end
 
 platform :mri_18 do
-  gem 'nokogiri', '~> 1.5.9'
-  gem 'rubyzip', '~> 0.9.9'
+  gem 'nokogiri', '~> 1.8.1'
+  gem 'rubyzip', '~> 1.2.1'
 end
